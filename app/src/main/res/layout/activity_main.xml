@@ -17,24 +17,27 @@
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:autofillHints="아이디"
+            android:inputType="textEmailAddress"
             android:layout_margin="10dp"
             android:hint="아이디" />
 
         <EditText
+            android:inputType="textPassword"
             android:id="@+id/etPassword"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:hint="비밀번호"/>
+            android:hint="비밀번호" />
 
         <Button
+            android:id="@+id/btn_login"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="로그인" />
 
         <Button
-            android:id="@+id/btn_login"
+            android:id="@+id/btn_register"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
