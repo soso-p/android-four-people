@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "694321287522",
+    "firebase_url": "https://android-four-people-default-rtdb.firebaseio.com",
+    "project_id": "android-four-people",
+    "storage_bucket": "android-four-people.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:694321287522:android:89628dfee59b696c961c3b",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "694321287522-lgvpenscbkf1uf9mpl2kpsej82nddshs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyGSi3Y9AVcjDBGwIamfy1q3W6ELeb5Lg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "694321287522-lgvpenscbkf1uf9mpl2kpsej82nddshs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:694321287522:android:d1198dc2d80b1173961c3b",
+        "android_client_info": {
+          "package_name": "com.example.ecobrandlyapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "694321287522-lgvpenscbkf1uf9mpl2kpsej82nddshs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyGSi3Y9AVcjDBGwIamfy1q3W6ELeb5Lg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "694321287522-lgvpenscbkf1uf9mpl2kpsej82nddshs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
