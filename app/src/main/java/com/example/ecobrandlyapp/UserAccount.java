@@ -12,7 +12,8 @@ public class UserAccount {
     private String Id;
     private String Pwd;
     private String PhoneNumber;
-    private int level = 0;
+    private int Level = 0;
+    private int Point;
 
 
     public UserAccount() { }
@@ -49,14 +50,20 @@ public class UserAccount {
     }
 
     public int getLevel() {
-        return level;
+        return Level;
     }
 
     public void setLevel(int level) {
-        this.level = level;
+        this.Level = level;
     }
 
+    public int getPoint() {
+        return Point;
+    }
 
+    public void setPoint(int point) {
+        Point = point;
+    }
 
 
 

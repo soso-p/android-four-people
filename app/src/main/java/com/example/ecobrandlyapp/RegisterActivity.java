@@ -4,10 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,12 +25,17 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.w3c.dom.Text;
+
 public class RegisterActivity extends AppCompatActivity
 {
 
     private FirebaseAuth mFirebaseAuth; //Firebase 인증처리
     private DatabaseReference mDatabaseRef; //실시간 데이터 베이스
-    private EditText metId,mEtPwd,mEtRePwd,mEtPhonenumber ;
+    private EditText metId,mEtPwd,mEtRePwd,mEtPhonenumber;
+
+    private TextView passMessage;
+
     private Button mBtnRegister;
 
 
@@ -39,6 +51,76 @@ public class RegisterActivity extends AppCompatActivity
         mEtPhonenumber=findViewById(R.id.etPhoneNumber);
         mEtPwd=findViewById(R.id.etPassword);
         mEtRePwd=findViewById(R.id.etRePassword);
+        passMessage=findViewById(R.id.etPasswordChecker);
+        //TextView passMessage = new TextView(getApplicationContext());
+
+
+        //동일 비밀번호 확인
+        mEtRePwd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                String Pwd=mEtPwd.getText().toString();
+                String RePwd=mEtRePwd.getText().toString();
+
+                if(Pwd.equals(RePwd)){
+                    passMessage.setHeight(30);
+                    passMessage.setText("비밀번호가 일치합니다");
+                    passMessage.setTypeface(null, Typeface.BOLD);
+                    passMessage.setTextColor(Color.GREEN);
+
+                }else {
+                    passMessage.setHeight(30);
+                    passMessage.setText("비밀번호가 일치하지 않습니다.");
+                    passMessage.setTextColor(Color.RED);
+                    passMessage.setTypeface(null, Typeface.BOLD);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        mEtPwd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                String Pwd=mEtPwd.getText().toString();
+                String RePwd=mEtRePwd.getText().toString();
+
+                if(Pwd.equals(RePwd)){
+                    passMessage.setHeight(30);
+                    passMessage.setText("비밀번호가 일치합니다");
+                    passMessage.setTypeface(null, Typeface.BOLD);
+                    passMessage.setTextColor(Color.GREEN);
+
+                }else {
+                    passMessage.setHeight(30);
+                    passMessage.setText("비밀번호가 일치하지 않습니다.");
+                    passMessage.setTextColor(Color.RED);
+                    passMessage.setTypeface(null, Typeface.BOLD);
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
 
         mBtnRegister=findViewById(R.id.btn_register);
         mBtnRegister.setOnClickListener(new View.OnClickListener() {
@@ -52,17 +134,52 @@ public class RegisterActivity extends AppCompatActivity
                 String strPhoneNumber = mEtPhonenumber.getText().toString();
 
 
+                //이메일 입력 확인
+                if (metId.getText().toString().length()==0){
+                    Toast.makeText(RegisterActivity.this,"Email을 입력하세요",Toast.LENGTH_SHORT).show();
+                    metId.requestFocus();
+                    return;
+                }
+                //비밀번호 입력 확인
+                if (mEtPwd.getText().toString().length()==0){
+                    Toast.makeText(RegisterActivity.this,"비밀번호을 입력하세요",Toast.LENGTH_SHORT).show();
+                    mEtPwd.requestFocus();
+                    return;
+                }
+                //비밀번호 입력 확인
+                if (mEtRePwd.getText().toString().length()==0){
+                    Toast.makeText(RegisterActivity.this,"비밀번호재 확인을 입력하세요",Toast.LENGTH_SHORT).show();
+                    mEtRePwd.requestFocus();
+                    return;
+                }
+
+                //동일 비밀번호 확인 -- 수정할수도 있음
+                if(!mEtPwd.getText().toString().equals((mEtRePwd.getText().toString()))){
+                    Toast.makeText(RegisterActivity.this,"비밀번호가 일치 하지 않습니다",Toast.LENGTH_SHORT).show();
+                    mEtRePwd.setText("");
+                    mEtPwd.setText("");
+                    mEtRePwd.requestFocus();
+                    return;
+                }
+
+
+
+
+
                 //Firebase auth 진행
                 mFirebaseAuth.createUserWithEmailAndPassword(strId,strPwd).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+                            /*make account*/
                             FirebaseUser firebaseUser=mFirebaseAuth.getCurrentUser();
                             UserAccount account = new UserAccount();
                             account.setIdToken(firebaseUser.getUid());
                             account.setId(firebaseUser.getEmail());
                             account.setPwd(strPwd);
                             account.setPhoneNumber(strPhoneNumber);
+                            account.setPoint(0);
+                            account.setLevel(0);
 
                             mDatabaseRef.child("userAccount").child(firebaseUser.getUid()).setValue(account);
 
