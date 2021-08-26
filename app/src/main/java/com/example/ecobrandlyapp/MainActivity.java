@@ -14,8 +14,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseRef; //실시간 데이터 베이스
     private EditText metId,mEtPwd;
     private Button btn_register,btn_login;
-
+    private int level=0;
 
 
     @Override
@@ -48,10 +52,31 @@ public class MainActivity extends AppCompatActivity {
                 mFirebaseAuth.signInWithEmailAndPassword(strId,strPwd).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        /*210826 수정 [일반회원/기업 layout 구분]*/
                         if(task.isSuccessful()){
-                            Intent intent = new Intent(MainActivity.this,HomeActivity.class);
-                            startActivity(intent);
-                            finish(); //현재 액티비티 파괴시키고 가기,, 다시 쓸일 없다고 생각
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            mDatabaseRef.child("userAccount").child(user.getUid()).child("level").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    String value = snapshot.getValue(String.class);
+                                    level=Integer.parseInt(value);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
+                                }
+                            });
+                            if(level==2) {//기업
+                                Intent intent = new Intent(MainActivity.this, HomeEnterpriseActivity.class);
+                                startActivity(intent);
+                                finish(); //현재 액티비티 파괴시키고 가기,, 다시 쓸일 없다고 생각
+                            }
+                            else if(level==1){//일반회원
+                                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                startActivity(intent);
+                                finish(); //현재 액티비티 파괴시키고 가기,, 다시 쓸일 없다고 생각
+                            }
                         }else{
                             Toast.makeText(MainActivity.this," 로그인 실패",Toast.LENGTH_SHORT).show();
                         }

@@ -64,13 +64,15 @@ public class RegisterEnterpriseActivity extends AppCompatActivity {
                             account.setPwd(strPwd);
                             account.setPhoneNumber(strPhoneNumber);
                             account.setBusinessReg(strBusinessReg);
-                            account.setLevel(1);//기업 level = 1
+                            //point 설정 필요?
+                            account.setLevel(2);//기업 level = 2
 
                             eDatabaseRef.child("userAccount").child(firebaseUser.getUid()).setValue(account);
 
                             Toast.makeText(RegisterEnterpriseActivity.this,"회원가입 성공하셨습니다.",Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(RegisterEnterpriseActivity.this, MainActivity.class);
                             startActivity(intent);
+                            finish();
                         }else{
                             Toast.makeText(RegisterEnterpriseActivity.this,"회원가입 실패하셨습니다.",Toast.LENGTH_SHORT).show();
                         }

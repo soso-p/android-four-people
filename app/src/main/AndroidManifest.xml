@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcoBrandlyApp">
         <activity
+            android:name=".CreateQrActivity"
+            android:exported="true" />
+        <activity
+            android:name=".HomeEnterpriseActivity"
+            android:exported="true" />
+        <activity
             android:name=".RegisterEnterpriseActivity"
             android:exported="true" />
         <activity
@@ -32,8 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-         <activity
-             android:name=".CafeQRScanActivity"/>
+        <activity android:name=".CafeQRScanActivity" />
     </application>
 
 </manifest>

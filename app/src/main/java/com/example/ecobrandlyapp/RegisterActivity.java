@@ -176,13 +176,14 @@ public class RegisterActivity extends AppCompatActivity
                             account.setPwd(strPwd);
                             account.setPhoneNumber(strPhoneNumber);
                             account.setPoint(0);
-                            account.setLevel(0);
+                            account.setLevel(1);
 
                             mDatabaseRef.child("userAccount").child(firebaseUser.getUid()).setValue(account);
 
                             Toast.makeText(RegisterActivity.this,"회원가입 성공하셨습니다.",Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                             startActivity(intent);
+                            finish();
                         }else{
                             Toast.makeText(RegisterActivity.this,"회원가입 실패하셨습니다.",Toast.LENGTH_SHORT).show();
                         }

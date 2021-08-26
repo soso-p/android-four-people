@@ -23,8 +23,9 @@ public class RegistrationOptionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(RegistrationOptionActivity.this,RegisterActivity.class);
-                //intent.putExtra("level",0); //level=1
+                //intent.putExtra("level",0);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -32,8 +33,9 @@ public class RegistrationOptionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(RegistrationOptionActivity.this,RegisterEnterpriseActivity.class);
-                //intent.putExtra("level",1); //level=2
+                //intent.putExtra("level",1);
                 startActivity(intent);
+                finish();
             }
         });
 
