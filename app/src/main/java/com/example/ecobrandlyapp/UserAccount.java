@@ -12,7 +12,8 @@ public class UserAccount {
     private String Id;
     private String Pwd;
     private String PhoneNumber;
-    private int Level = 0;
+    private String BusinessReg=" ";
+    private long Level = 0;
     private int Point;
 
 
@@ -49,13 +50,17 @@ public class UserAccount {
         PhoneNumber = phoneNumber;
     }
 
-    public int getLevel() {
+    public long getLevel() {
         return Level;
     }
 
     public void setLevel(int level) {
         this.Level = level;
     }
+
+    public void setBusinessReg(String businessReg){ BusinessReg = businessReg; }
+
+    public String getBusinessReg(){ return BusinessReg ; }
 
     public int getPoint() {
         return Point;

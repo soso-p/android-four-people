@@ -38,7 +38,6 @@ public class RegisterActivity extends AppCompatActivity
 
     private Button mBtnRegister;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +86,7 @@ public class RegisterActivity extends AppCompatActivity
 
             }
         });
+        /*
         mEtPwd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -119,8 +119,7 @@ public class RegisterActivity extends AppCompatActivity
 
             }
         });
-
-
+         */
 
         mBtnRegister=findViewById(R.id.btn_register);
         mBtnRegister.setOnClickListener(new View.OnClickListener() {
@@ -148,23 +147,24 @@ public class RegisterActivity extends AppCompatActivity
                 }
                 //비밀번호 입력 확인
                 if (mEtRePwd.getText().toString().length()==0){
-                    Toast.makeText(RegisterActivity.this,"비밀번호재 확인을 입력하세요",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this,"비밀번호 재확인을 입력하세요",Toast.LENGTH_SHORT).show();
                     mEtRePwd.requestFocus();
                     return;
                 }
-
                 //동일 비밀번호 확인 -- 수정할수도 있음
                 if(!mEtPwd.getText().toString().equals((mEtRePwd.getText().toString()))){
-                    Toast.makeText(RegisterActivity.this,"비밀번호가 일치 하지 않습니다",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this,"비밀번호가 일치하지 않습니다",Toast.LENGTH_SHORT).show();
                     mEtRePwd.setText("");
                     mEtPwd.setText("");
                     mEtRePwd.requestFocus();
                     return;
                 }
-
-
-
-
+                //연락처 확인
+                if(mEtPhonenumber.getText().toString().length()==0){
+                    Toast.makeText(RegisterActivity.this,"연락처를 입력하세요",Toast.LENGTH_SHORT).show();
+                    mEtPhonenumber.requestFocus();
+                    return;
+                }
 
                 //Firebase auth 진행
                 mFirebaseAuth.createUserWithEmailAndPassword(strId,strPwd).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
@@ -179,13 +179,14 @@ public class RegisterActivity extends AppCompatActivity
                             account.setPwd(strPwd);
                             account.setPhoneNumber(strPhoneNumber);
                             account.setPoint(0);
-                            account.setLevel(0);
+                            account.setLevel(1);
 
                             mDatabaseRef.child("userAccount").child(firebaseUser.getUid()).setValue(account);
 
                             Toast.makeText(RegisterActivity.this,"회원가입 성공하셨습니다.",Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                             startActivity(intent);
+                            finish();
                         }else{
                             Toast.makeText(RegisterActivity.this,"회원가입 실패하셨습니다.",Toast.LENGTH_SHORT).show();
                         }
@@ -193,5 +194,7 @@ public class RegisterActivity extends AppCompatActivity
                 });
             }
         });
+
+
     }
 }
