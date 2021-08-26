@@ -86,6 +86,7 @@ public class RegisterActivity extends AppCompatActivity
 
             }
         });
+        /*
         mEtPwd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -118,6 +119,7 @@ public class RegisterActivity extends AppCompatActivity
 
             }
         });
+         */
 
         mBtnRegister=findViewById(R.id.btn_register);
         mBtnRegister.setOnClickListener(new View.OnClickListener() {
@@ -145,17 +147,22 @@ public class RegisterActivity extends AppCompatActivity
                 }
                 //비밀번호 입력 확인
                 if (mEtRePwd.getText().toString().length()==0){
-                    Toast.makeText(RegisterActivity.this,"비밀번호재 확인을 입력하세요",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this,"비밀번호 재확인을 입력하세요",Toast.LENGTH_SHORT).show();
                     mEtRePwd.requestFocus();
                     return;
                 }
-
                 //동일 비밀번호 확인 -- 수정할수도 있음
                 if(!mEtPwd.getText().toString().equals((mEtRePwd.getText().toString()))){
-                    Toast.makeText(RegisterActivity.this,"비밀번호가 일치 하지 않습니다",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this,"비밀번호가 일치하지 않습니다",Toast.LENGTH_SHORT).show();
                     mEtRePwd.setText("");
                     mEtPwd.setText("");
                     mEtRePwd.requestFocus();
+                    return;
+                }
+                //연락처 확인
+                if(mEtPhonenumber.getText().toString().length()==0){
+                    Toast.makeText(RegisterActivity.this,"연락처를 입력하세요",Toast.LENGTH_SHORT).show();
+                    mEtPhonenumber.requestFocus();
                     return;
                 }
 
