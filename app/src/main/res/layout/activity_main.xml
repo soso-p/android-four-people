@@ -10,15 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/etId"
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:autofillHints="아이디"
-            android:inputType="textEmailAddress"
             android:layout_margin="10dp"
+            android:autofillHints="아이디"
             android:hint="아이디" />
 
         <EditText
