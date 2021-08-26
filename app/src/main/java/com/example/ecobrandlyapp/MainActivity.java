@@ -21,6 +21,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/*첫 화면 */
+
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mFirebaseAuth; //Firebase 인증처리
@@ -70,13 +72,14 @@ public class MainActivity extends AppCompatActivity {
 
                             if(level==2) {//기업
                                 Intent intent = new Intent(MainActivity.this, HomeEnterpriseActivity.class);
+
                                 startActivity(intent);
-                                finish();
+                                //finish();
                             }
                             else if(level==1){//일반회원
                                 Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                                 startActivity(intent);
-                                finish();
+                                //finish();
                             }
 
                         }else{

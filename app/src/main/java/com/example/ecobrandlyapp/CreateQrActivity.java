@@ -18,59 +18,51 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class CreateQrActivity extends AppCompatActivity {
 
     DatabaseReference mDatabaseRef;
     private ImageView img;
-    private String text, num, phoneNum;
+    private String num, phoneNum, text;
+    private StringBuilder str;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_qr);
 
+        str=new StringBuilder();
         /*사업자번호 읽어오기*/
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); //현 로그인한 유저
         mDatabaseRef= FirebaseDatabase.getInstance().getReference("fourpeople");
 
-        mDatabaseRef.child("userAccount").child(user.getUid()).child("businessReg").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                num = snapshot.getValue(String.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
-            }
-        });
-
-        mDatabaseRef.child("userAccount").child(user.getUid()).child("phoneNumber").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                phoneNum = snapshot.getValue(String.class); //핸드폰번호 받아오기
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
-            }
-        });
-
-        text=num+"\n"+phoneNum;
-
         img= (ImageView)findViewById(R.id.qrcode);
-
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-        try {
-            BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.QR_CODE, 200, 200);
-            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
-            img.setImageBitmap(bitmap);
-        } catch (Exception e) {
 
-        }
+        mDatabaseRef.child("userAccount").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserAccount us = snapshot.getValue(UserAccount.class);//객체에 저장
+                num= us.getBusinessReg();
+                phoneNum=us.getPhoneNumber();
+
+                try {
+                    BitMatrix bitMatrix = multiFormatWriter.encode(num+"\n"+phoneNum, BarcodeFormat.QR_CODE, 200, 200);
+                    BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+                    Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+                    img.setImageBitmap(bitmap);
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
+            }
+        });
+
 
 
     }
