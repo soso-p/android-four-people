@@ -12,6 +12,7 @@ public class UserAccount {
     private String Id;
     private String Pwd;
     private String PhoneNumber;
+    private String BusinessReg=" ";
     private int level = 0;
 
 
@@ -55,6 +56,10 @@ public class UserAccount {
     public void setLevel(int level) {
         this.level = level;
     }
+
+    public void setBusinessReg(String businessReg){ BusinessReg = businessReg; }
+
+    public String getBusinessReg(){ return BusinessReg ; }
 
 
 

@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);//화면에 무엇을 보여줄지 결정하는 메서드
 
-        mFirebaseAuth=FirebaseAuth.getInstance();
+        mFirebaseAuth=FirebaseAuth.getInstance(); //파이어베이스 접근 권한
         mDatabaseRef= FirebaseDatabase.getInstance().getReference("fourpeople");
 
         metId=findViewById(R.id.etId);
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,RegisterActivity.class);
+                Intent intent = new Intent(MainActivity.this,RegistrationOptionActivity.class);
                 startActivity(intent); //액티비티 이동 구문
             }
         });

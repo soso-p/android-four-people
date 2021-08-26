@@ -26,7 +26,6 @@ public class RegisterActivity extends AppCompatActivity
     private EditText metId,mEtPwd,mEtRePwd,mEtPhonenumber ;
     private Button mBtnRegister;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +35,9 @@ public class RegisterActivity extends AppCompatActivity
         mDatabaseRef= FirebaseDatabase.getInstance().getReference("fourpeople");
 
         metId=findViewById(R.id.etId);
-        mEtPhonenumber=findViewById(R.id.etPhoneNumber);
+        mEtPhonenumber=findViewById(R.id.PhoneNumber);
         mEtPwd=findViewById(R.id.etPassword);
-        mEtRePwd=findViewById(R.id.etRePassword);
+        mEtRePwd=findViewById(R.id.RePassword);
 
         mBtnRegister=findViewById(R.id.btn_register);
         mBtnRegister.setOnClickListener(new View.OnClickListener() {
@@ -76,5 +75,7 @@ public class RegisterActivity extends AppCompatActivity
                 });
             }
         });
+
+
     }
 }
