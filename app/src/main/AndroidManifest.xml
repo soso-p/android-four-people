@@ -27,6 +27,8 @@
         </activity>
          <activity
              android:name=".CafeQRScanActivity"/>
+         <activity
+             android:name=".AdminActivity"/>
     </application>
 
 </manifest>
