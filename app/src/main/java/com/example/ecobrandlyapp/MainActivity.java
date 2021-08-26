@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -57,11 +58,20 @@ public class MainActivity extends AppCompatActivity {
                         /*210826 수정 [일반회원/기업 layout 구분]*/
                         if(task.isSuccessful()){
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                            mDatabaseRef.child("userAccount").child(user.getUid()).child("level").addValueEventListener(new ValueEventListener() {
+                            mDatabaseRef.child("userAccount").child(user.getUid()).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    long value = snapshot.getValue(long.class);
+                                    long value = snapshot.child("level").getValue(long.class);
                                     level = value;
+
+                                    String userLevel = Long.toString(snapshot.child("level").getValue(long.class));
+                                    String userId = snapshot.child("id").getValue(String.class);
+                                    //Log.i("MainActivity","msg : "+level+userId);
+                                    if(userId.equals(strId) && userLevel.equals("0")){
+                                        Intent intent = new Intent(MainActivity.this, AdminActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
                                 }
 
                                 @Override
@@ -72,11 +82,9 @@ public class MainActivity extends AppCompatActivity {
 
                             if(level==2) {//기업
                                 Intent intent = new Intent(MainActivity.this, HomeEnterpriseActivity.class);
-
                                 startActivity(intent);
                                 //finish();
-                            }
-                            else if(level==1){//일반회원
+                            }else if(level==1){//일반회원
                                 Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                                 startActivity(intent);
                                 //finish();
@@ -96,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MainActivity.this,RegistrationOptionActivity.class);
                 startActivity(intent); //액티비티 이동 구문
             }
