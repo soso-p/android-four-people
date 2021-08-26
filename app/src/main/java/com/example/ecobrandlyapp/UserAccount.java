@@ -13,7 +13,8 @@ public class UserAccount {
     private String Pwd;
     private String PhoneNumber;
     private String BusinessReg=" ";
-    private int level = 0;
+    private int Level = 0;
+    private int Point;
 
 
     public UserAccount() { }
@@ -50,18 +51,24 @@ public class UserAccount {
     }
 
     public int getLevel() {
-        return level;
+        return Level;
     }
 
     public void setLevel(int level) {
-        this.level = level;
+        this.Level = level;
     }
 
     public void setBusinessReg(String businessReg){ BusinessReg = businessReg; }
 
     public String getBusinessReg(){ return BusinessReg ; }
 
+    public int getPoint() {
+        return Point;
+    }
 
+    public void setPoint(int point) {
+        Point = point;
+    }
 
 
 

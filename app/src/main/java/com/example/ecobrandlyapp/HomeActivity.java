@@ -2,6 +2,7 @@ package com.example.ecobrandlyapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -35,5 +36,14 @@ public class HomeActivity extends AppCompatActivity {
         //탈퇴처리하는 구문 (파이어베이스의 회원 정보 삭제)
         //mFirebaseAuth.getCurrentUser().delete();
 
+
+        Button btn_qr1 = findViewById(R.id.btn_qr1);
+        btn_qr1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this,CafeQRScanActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }

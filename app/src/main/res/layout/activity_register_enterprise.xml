@@ -31,7 +31,7 @@
             android:inputType="textPassword" />
 
         <EditText
-            android:id="@+id/RePassword"
+            android:id="@+id/etRePassword"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
@@ -39,7 +39,7 @@
             android:hint="비밀번호 확인"/>
 
         <EditText
-            android:id="@+id/PhoneNumber"
+            android:id="@+id/etPhoneNumber"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"

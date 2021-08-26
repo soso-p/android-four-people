@@ -92,4 +92,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_pass" />
 
+    <Button
+        android:id="@+id/btn_qr1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="QR 스캔 버튼"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_logout" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

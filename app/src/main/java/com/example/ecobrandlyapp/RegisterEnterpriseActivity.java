@@ -34,9 +34,9 @@ public class RegisterEnterpriseActivity extends AppCompatActivity {
         eDatabaseRef= FirebaseDatabase.getInstance().getReference("fourpeople");
 
         eetId=findViewById(R.id.etId);
-        eEtPhonenumber=findViewById(R.id.PhoneNumber);
+        eEtPhonenumber=findViewById(R.id.etPhoneNumber);
         eEtPwd=findViewById(R.id.etPassword);
-        eEtRePwd=findViewById(R.id.RePassword);
+        eEtRePwd=findViewById(R.id.etRePassword);
         eEtBusinessReg=findViewById(R.id.BusinessRegistration);
 
 
