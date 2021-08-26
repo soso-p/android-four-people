@@ -28,6 +28,7 @@ public class CafeQRScanActivity extends AppCompatActivity{
         setContentView(R.layout.activity_cafeqrscan);
 
         qrScan = new IntentIntegrator(this);
+        qrScan.setOrientationLocked(false); //세로모드로 고정!
         qrScan.setPrompt("박스 안에 QR 코드를 스캔하세요!");
         qrScan.initiateScan();
 
