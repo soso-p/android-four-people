@@ -71,7 +71,7 @@ public class AdminActivity extends AppCompatActivity {
                     String phoneNumber = snapshot.child("phoneNumber").getValue(String.class);
                     String level = Long.toString(snapshot.child("level").getValue(Long.class));
 
-                    if(level.equals("0")){
+                    if(level.equals("1")){
                         String point = Long.toString(snapshot.child("point").getValue(Long.class));
                         int points = Integer.parseInt(point);
                         if(points >= 0)//15로 변경필요
