@@ -23,7 +23,7 @@ public class CreateQrActivity extends AppCompatActivity {
 
     DatabaseReference mDatabaseRef;
     private ImageView img;
-    private String text;
+    private String text, num, phoneNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class CreateQrActivity extends AppCompatActivity {
         mDatabaseRef.child("userAccount").child(user.getUid()).child("businessReg").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                text = snapshot.getValue(String.class);
+                num = snapshot.getValue(String.class);
             }
 
             @Override
@@ -46,12 +46,25 @@ public class CreateQrActivity extends AppCompatActivity {
             }
         });
 
+        mDatabaseRef.child("userAccount").child(user.getUid()).child("phoneNumber").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                phoneNum = snapshot.getValue(String.class); //핸드폰번호 받아오기
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
+            }
+        });
+
+        text=num+"\n"+phoneNum;
+
         img= (ImageView)findViewById(R.id.qrcode);
 
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
-            BitMatrix bitMatrix = multiFormatWriter.encode(text+"C", BarcodeFormat.QR_CODE, 200, 200); //사업자번호로 qr코드 생성
-            //숫자로만 이루어진 qr코드가 생성이 안되서 "c" 추가함.
+            BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.QR_CODE, 200, 200);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
             img.setImageBitmap(bitmap);

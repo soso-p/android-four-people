@@ -71,12 +71,12 @@ public class MainActivity extends AppCompatActivity {
                             if(level==2) {//기업
                                 Intent intent = new Intent(MainActivity.this, HomeEnterpriseActivity.class);
                                 startActivity(intent);
-                                finish(); //현재 액티비티 파괴시키고 가기,, 다시 쓸일 없다고 생각
+                                finish();
                             }
                             else if(level==1){//일반회원
                                 Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                                 startActivity(intent);
-                                finish(); //현재 액티비티 파괴시키고 가기,, 다시 쓸일 없다고 생각
+                                finish();
                             }
 
                         }else{

@@ -159,10 +159,6 @@ public class RegisterActivity extends AppCompatActivity
                     return;
                 }
 
-
-
-
-
                 //Firebase auth 진행
                 mFirebaseAuth.createUserWithEmailAndPassword(strId,strPwd).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
