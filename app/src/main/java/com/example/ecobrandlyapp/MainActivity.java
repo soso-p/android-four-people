@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //로그인 요청버튼
-                String strId = metId.getText().toString();
-                String strPwd = mEtPwd.getText().toString();
+                String strId = metId.getText().toString().trim();
+                String strPwd = mEtPwd.getText().toString().trim();
 
                 mFirebaseAuth.signInWithEmailAndPassword(strId,strPwd).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -72,6 +72,22 @@ public class MainActivity extends AppCompatActivity {
                                         startActivity(intent);
                                         finish();
                                     }
+
+                                    /*두번 클릭해야 반영.. 더 빨리되는 느낌..??*/
+                                    /*
+                                    else if(level==1){//일반회원
+                                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        //finish();
+                                    }
+                                    else if(level==2) {//기업
+                                        Intent intent = new Intent(MainActivity.this, HomeEnterpriseActivity.class);
+                                        startActivity(intent);
+                                        //finish();
+                                    }
+                                    */
+
+
                                 }
 
                                 @Override
