@@ -37,7 +37,7 @@ public class HomeEnterpriseActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(HomeEnterpriseActivity.this,CreateQrActivity.class);
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
 

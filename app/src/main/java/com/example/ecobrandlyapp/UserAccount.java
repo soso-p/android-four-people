@@ -13,7 +13,7 @@ public class UserAccount {
     private String Pwd;
     private String PhoneNumber;
     private String BusinessReg=" ";
-    private int Level = 0;
+    private long Level = 0;
     private int Point;
 
 
@@ -50,7 +50,7 @@ public class UserAccount {
         PhoneNumber = phoneNumber;
     }
 
-    public int getLevel() {
+    public long getLevel() {
         return Level;
     }
 

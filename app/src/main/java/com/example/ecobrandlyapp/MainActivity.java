@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseRef; //실시간 데이터 베이스
     private EditText metId,mEtPwd;
     private Button btn_register,btn_login;
-    private int level=0;
+    private long level=0;
 
 
     @Override
@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
                             mDatabaseRef.child("userAccount").child(user.getUid()).child("level").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    String value = snapshot.getValue(String.class);
-                                    level=Integer.parseInt(value);
+                                    long value = snapshot.getValue(long.class);
+                                    level = value;
                                 }
 
                                 @Override
@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                                     //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
                                 }
                             });
+
                             if(level==2) {//기업
                                 Intent intent = new Intent(MainActivity.this, HomeEnterpriseActivity.class);
                                 startActivity(intent);
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 finish(); //현재 액티비티 파괴시키고 가기,, 다시 쓸일 없다고 생각
                             }
+
                         }else{
                             Toast.makeText(MainActivity.this," 로그인 실패",Toast.LENGTH_SHORT).show();
                         }
