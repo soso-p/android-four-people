@@ -86,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity
 
             }
         });
-        /*
+
         mEtPwd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -119,7 +119,7 @@ public class RegisterActivity extends AppCompatActivity
 
             }
         });
-         */
+
 
         mBtnRegister=findViewById(R.id.btn_register);
         mBtnRegister.setOnClickListener(new View.OnClickListener() {
