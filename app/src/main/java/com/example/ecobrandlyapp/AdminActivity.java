@@ -7,12 +7,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -25,6 +24,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
 public class AdminActivity extends AppCompatActivity {
 
     private FirebaseAuth mFirebaseAuth;
@@ -35,6 +38,11 @@ public class AdminActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
+        TableLayout tableLayout = (TableLayout)findViewById(R.id.tablelayout);
+        TableLayout tableLayout2 = (TableLayout)findViewById(R.id.tablelayout2);
+        TableRow titleRow1 = (TableRow)findViewById(R.id.titleRow1);
+        TableRow titleRow2 = (TableRow)findViewById(R.id.titleRow2);
+        TableRow noDataComment = (TableRow)findViewById(R.id.noDataComment);
 
         Button btn_logout = findViewById(R.id.btn_logout);
         btn_logout.setOnClickListener(new View.OnClickListener() {
@@ -48,14 +56,62 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
 
-        TableLayout tableLayout = (TableLayout)findViewById(R.id.tablelayout);
-        TableLayout tableLayout2 = (TableLayout)findViewById(R.id.tablelayout2);
+        TextView date = (TextView)findViewById(R.id.date);
+        Calendar cal = Calendar.getInstance();
+        System.out.println(cal);
+
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH) + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        date.setText("Today : " + year + "년도 " + month + "월 " + day + "일 ");
+        date.setTextSize(10);
+
+        int resultDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH) - day;
+        TextView dday = (TextView)findViewById(R.id.Dday);
+        dday.setText("혜택 발송 D - "+ Integer.toString(resultDay));
+        dday.setTextColor(Color.RED);
+        dday.setTextSize(12);
+
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference databaseRef = database.getReference("fourpeople");
         databaseRef.child("userAccount").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Button btn_reset = (Button)findViewById(R.id.btn_reset);
+                btn_reset.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            String level = Long.toString(snapshot.child("level").getValue(Long.class));
+
+                            if (level.equals("1")) {
+                                String point = Long.toString(snapshot.child("point").getValue(Long.class));
+                                Map<String, Object> pointUpdate = new HashMap<>();
+                                pointUpdate.put("point", 0);
+                                databaseRef.child("userAccount").child(snapshot.child("idToken").getValue(String.class)).updateChildren(pointUpdate);
+                            }
+                        }
+
+                        Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);
+                    }
+
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+
+        databaseRef.child("userAccount").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                tableLayout.removeAllViews();
+                tableLayout2.removeAllViews();
+                tableLayout.addView(titleRow1);
+                tableLayout2.addView(titleRow2);
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String id = snapshot.child("id").getValue(String.class);
@@ -66,6 +122,7 @@ public class AdminActivity extends AppCompatActivity {
 
                 }
 
+                int row_cnt = 0;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String id = snapshot.child("id").getValue(String.class);
                     String phoneNumber = snapshot.child("phoneNumber").getValue(String.class);
@@ -74,10 +131,14 @@ public class AdminActivity extends AppCompatActivity {
                     if(level.equals("1")){
                         String point = Long.toString(snapshot.child("point").getValue(Long.class));
                         int points = Integer.parseInt(point);
-                        if(points >= 0)//15로 변경필요
+                        if(points >= 15) {//15로 변경필요
                             printPresentRow(tableLayout2, id, phoneNumber, points);
+                            row_cnt += 1;
+                        }
                     }
-
+                }
+                if(row_cnt == 0){
+                    tableLayout2.addView(noDataComment);
                 }
             }
 
@@ -86,6 +147,7 @@ public class AdminActivity extends AppCompatActivity {
         });
 
     }
+
     public void printAllRow(TableLayout tableLayout, String id, String phoneNumber, String level) {
         TableRow tableRow = new TableRow(this);
         tableRow.setLayoutParams(new TableRow.LayoutParams(

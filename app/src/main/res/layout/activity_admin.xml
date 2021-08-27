@@ -19,12 +19,19 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="right"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:gravity="right"
                 android:text="관리자님" />
 
             <Button
@@ -36,21 +43,22 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_pass" />
+
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/editTextTextPersonName2"
+            <TextView
+                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="[전체 회원 목록]" />
+                android:text="[전체 회원 목록]"
+                android:textColor="#0000FF" />
         </LinearLayout>
 
         <LinearLayout
@@ -65,7 +73,7 @@
                 android:layout_margin="8dp"
                 android:stretchColumns="*">
 
-                <TableRow>
+                <TableRow android:id="@+id/titleRow1">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -95,8 +103,21 @@
                         android:textSize="14sp" />
                 </TableRow>
             </TableLayout>
+        </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/interval"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
+            <EditText
+                android:id="@+id/editTextTextPersonName2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName" />
         </LinearLayout>
 
         <LinearLayout
@@ -104,14 +125,21 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/editTextTextPersonName3"
+            <TextView
+                android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="[혜택 대상 회원 목록]" />
+                android:text="[혜택 대상 회원 목록]"
+                android:textColor="#0000FF" />
+
+            <TextView
+                android:id="@+id/Dday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -126,7 +154,7 @@
                 android:layout_margin="8dp"
                 android:stretchColumns="*">
 
-                <TableRow>
+                <TableRow android:id="@+id/titleRow2">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -164,7 +192,27 @@
                         android:textColor="#FFFFFF"
                         android:textSize="14sp" />
                 </TableRow>
+                <TableRow android:id="@+id/noDataComment">
+                    <TextView
+                        android:layout_span = "4"
+                        android:text="혜택 대상자가 존재하지 않습니다!"
+                        android:gravity="center"
+                        android:textSize="14sp"/>
+                </TableRow>
             </TableLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="최종 혜택 전송 완료 및 매 달 포인트 초기화" />
         </LinearLayout>
 
     </LinearLayout>
