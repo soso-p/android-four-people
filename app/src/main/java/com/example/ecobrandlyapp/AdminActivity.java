@@ -79,7 +79,7 @@ public class AdminActivity extends AppCompatActivity {
         dday.setTextSize(12);
 
         /*달의 말일 23:00:00 ~ 23:59:59 까지는 버튼 사용 금지*/
-        if((resultDay == 3 && hour == 20 && min>=0 && min<=59))//말일, 23시 0분부터 59분까지 버튼 사용
+        if((resultDay == 0 && hour == 23 && min>=0 && min<=59))//말일, 23시 0분부터 59분까지 버튼 사용
             btn_complete.setEnabled(true);
         btn_complete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
