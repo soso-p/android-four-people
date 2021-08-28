@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,6 +44,8 @@ public class AdminActivity extends AppCompatActivity {
         TableRow titleRow1 = (TableRow)findViewById(R.id.titleRow1);
         TableRow titleRow2 = (TableRow)findViewById(R.id.titleRow2);
         TableRow noDataComment = (TableRow)findViewById(R.id.noDataComment);
+        Button btn_complete = (Button)findViewById(R.id.btn_complete);
+        Button btn_reset = (Button)findViewById(R.id.btn_reset);
 
         Button btn_logout = findViewById(R.id.btn_logout);
         btn_logout.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +66,10 @@ public class AdminActivity extends AppCompatActivity {
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH) + 1;
         int day = cal.get(Calendar.DAY_OF_MONTH);
-        date.setText("Today : " + year + "년도 " + month + "월 " + day + "일 ");
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int min = cal.get(Calendar.MINUTE);
+        int sec = cal.get(Calendar.SECOND);
+        date.setText("Today : " + year + "/ " + month + "/ " + day);
         date.setTextSize(10);
 
         int resultDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH) - day;
@@ -72,6 +78,14 @@ public class AdminActivity extends AppCompatActivity {
         dday.setTextColor(Color.RED);
         dday.setTextSize(12);
 
+        /*달의 말일 23:00:00 ~ 23:59:59 까지는 버튼 사용 금지*/
+        if((resultDay == 3 && hour == 20 && min>=0 && min<=59))//말일, 23시 0분부터 59분까지 버튼 사용
+            btn_complete.setEnabled(true);
+        btn_complete.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                btn_reset.setEnabled(true);
+            }
+        });
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference databaseRef = database.getReference("fourpeople");
@@ -168,7 +182,10 @@ public class AdminActivity extends AppCompatActivity {
         tableRow.addView(textView2);
 
         TextView textView3 = new TextView(this);
-        textView3.setText(String.valueOf(level));
+        if(level.equals("0")) textView3.setText("관리자");
+        else if(level.equals("1")) textView3.setText("일반회원");
+        else if(level.equals("2")) textView3.setText("기업");
+        else textView3.setText(String.valueOf(level));
         textView3.setGravity(Gravity.CENTER);
         textView3.setTextSize(14);
         tableRow.addView(textView3);

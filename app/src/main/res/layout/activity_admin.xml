@@ -208,11 +208,20 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/btn_complete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="최종 혜택 전송 완료"
+                android:layout_marginRight="10dp"
+                android:enabled="false"/>
+            <Button
                 android:id="@+id/btn_reset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="최종 혜택 전송 완료 및 매 달 포인트 초기화" />
+                android:text="매 달 포인트 초기화"
+                android:enabled="false"/>
         </LinearLayout>
 
     </LinearLayout>
