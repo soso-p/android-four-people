@@ -10,9 +10,11 @@ public class UserAccount {
 
     private String idToken;  //Firebase Uid
     private String Id;
+    private String Alising = "  "; //별칭
     private String Pwd;
     private String PhoneNumber;
-    private String BusinessReg=" ";
+    private String BusinessReg;
+
     private long Level = 0;
     private int Point;
 
@@ -70,7 +72,13 @@ public class UserAccount {
         Point = point;
     }
 
+    public String getAlising() {
+        return Alising;
+    }
 
+    public void setAlising(String alising) {
+        Alising = alising;
+    }
 
 
 

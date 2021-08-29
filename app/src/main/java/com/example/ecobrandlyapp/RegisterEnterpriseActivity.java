@@ -27,7 +27,7 @@ public class RegisterEnterpriseActivity extends AppCompatActivity {
 
     private FirebaseAuth eFirebaseAuth; //Firebase 인증처리
     private DatabaseReference eDatabaseRef; //실시간 데이터 베이스
-    private EditText eetId,eEtPwd,eEtRePwd,eEtPhonenumber,eEtBusinessReg ;
+    private EditText eetId,eEtPwd,eEtRePwd,eEtPhonenumber,eEtBusinessReg,eEtAliasing;
     private Button eBtnRegister;
     private TextView passMessage;
 
@@ -44,6 +44,7 @@ public class RegisterEnterpriseActivity extends AppCompatActivity {
         eEtPwd=findViewById(R.id.etPassword2);
         eEtRePwd=findViewById(R.id.etRePassword2);
         eEtBusinessReg=findViewById(R.id.BusinessRegistration);
+        eEtAliasing=findViewById(R.id.etAliasing2);
         passMessage=findViewById(R.id.etPasswordChecker2);
 
 
@@ -93,29 +94,29 @@ public class RegisterEnterpriseActivity extends AppCompatActivity {
                 String strRePwd =eEtRePwd.getText().toString();//pwd->repwd로 수정
                 String strPhoneNumber = eEtPhonenumber.getText().toString();
                 String strBusinessReg=eEtBusinessReg.getText().toString();
+                String strAlising=eEtAliasing.getText().toString();
 
 
                 //이메일 입력 확인
-                if (eetId.getText().toString().length()==0){
+                if (strId.length()==0){
                     Toast.makeText(RegisterEnterpriseActivity.this,"Email을 입력하세요",Toast.LENGTH_SHORT).show();
                     eetId.requestFocus();
                     return;
                 }
                 //비밀번호 입력 확인
-                if (eEtPwd.getText().toString().length()==0){
+                if (strPwd.length()==0){
                     Toast.makeText(RegisterEnterpriseActivity.this,"비밀번호을 입력하세요",Toast.LENGTH_SHORT).show();
                     eEtPwd.requestFocus();
                     return;
                 }
                 //비밀번호 입력 확인
-                if (eEtRePwd.getText().toString().length()==0){
+                if (strRePwd.length()==0){
                     Toast.makeText(RegisterEnterpriseActivity.this,"비밀번호 재확인을 입력하세요",Toast.LENGTH_SHORT).show();
                     eEtRePwd.requestFocus();
                     return;
                 }
-
                 //동일 비밀번호 확인 -- 수정할수도 있음
-                if(!eEtPwd.getText().toString().equals((eEtRePwd.getText().toString()))){
+                if(!strPwd.equals(strRePwd)){
                     Toast.makeText(RegisterEnterpriseActivity.this,"비밀번호가 일치하지 않습니다",Toast.LENGTH_SHORT).show();
                     eEtRePwd.setText("");
                     eEtPwd.setText("");
@@ -123,13 +124,20 @@ public class RegisterEnterpriseActivity extends AppCompatActivity {
                     return;
                 }
                 //연락처 확인
-                if(eEtPhonenumber.getText().toString().length()==0){
+                if(strPhoneNumber.length()==0){
                     Toast.makeText(RegisterEnterpriseActivity.this,"연락처를 입력하세요",Toast.LENGTH_SHORT).show();
                     eEtPhonenumber.requestFocus();
                     return;
                 }
+
+                //별칭 확인
+                if(strAlising.length()==0){
+                    Toast.makeText(RegisterEnterpriseActivity.this,"이름 입력하세요",Toast.LENGTH_SHORT).show();
+                    eEtAliasing.requestFocus();
+                    return;
+                }
                 //사업자등록번호 입력 확인
-                if(eEtBusinessReg.getText().toString().length()==0 || eEtBusinessReg.getText().toString().length()!=0){
+                if(eEtBusinessReg.getText().toString().length()==0 ){
                     Toast.makeText(RegisterEnterpriseActivity.this,"사업자등록번호를 정확히 입력해주세요",Toast.LENGTH_SHORT).show();
                     eEtBusinessReg.requestFocus();
                     return;
@@ -149,6 +157,7 @@ public class RegisterEnterpriseActivity extends AppCompatActivity {
                             account.setBusinessReg(strBusinessReg);
                             //point 설정 필요?
                             account.setLevel(2);//기업 level = 2
+                            account.setAlising(strAlising);
 
                             eDatabaseRef.child("userAccount").child(firebaseUser.getUid()).setValue(account);
 

@@ -32,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity
 
     private FirebaseAuth mFirebaseAuth; //Firebase 인증처리
     private DatabaseReference mDatabaseRef; //실시간 데이터 베이스
-    private EditText metId,mEtPwd,mEtRePwd,mEtPhonenumber;
+    private EditText metId,mEtPwd,mEtRePwd,mEtPhonenumber,mEtAliasing;
 
     private TextView passMessage;
 
@@ -50,7 +50,9 @@ public class RegisterActivity extends AppCompatActivity
         mEtPhonenumber=findViewById(R.id.etPhoneNumber);
         mEtPwd=findViewById(R.id.etPassword);
         mEtRePwd=findViewById(R.id.etRePassword);
+        mEtAliasing=findViewById(R.id.etAliasing);
         passMessage=findViewById(R.id.etPasswordChecker);
+
         //TextView passMessage = new TextView(getApplicationContext());
 
 
@@ -131,28 +133,28 @@ public class RegisterActivity extends AppCompatActivity
                 String strPwd = mEtPwd.getText().toString();
                 String strRePwd =mEtPwd.getText().toString();
                 String strPhoneNumber = mEtPhonenumber.getText().toString();
-
+                String strAlising=mEtAliasing.getText().toString();
 
                 //이메일 입력 확인
-                if (metId.getText().toString().length()==0){
+                if (strId.length()==0){
                     Toast.makeText(RegisterActivity.this,"Email을 입력하세요",Toast.LENGTH_SHORT).show();
                     metId.requestFocus();
                     return;
                 }
                 //비밀번호 입력 확인
-                if (mEtPwd.getText().toString().length()==0){
+                if (strPwd.length()==0){
                     Toast.makeText(RegisterActivity.this,"비밀번호을 입력하세요",Toast.LENGTH_SHORT).show();
                     mEtPwd.requestFocus();
                     return;
                 }
                 //비밀번호 입력 확인
-                if (mEtRePwd.getText().toString().length()==0){
+                if (strRePwd.length()==0){
                     Toast.makeText(RegisterActivity.this,"비밀번호 재확인을 입력하세요",Toast.LENGTH_SHORT).show();
                     mEtRePwd.requestFocus();
                     return;
                 }
                 //동일 비밀번호 확인 -- 수정할수도 있음
-                if(!mEtPwd.getText().toString().equals((mEtRePwd.getText().toString()))){
+                if(!strPwd.equals(strRePwd)){
                     Toast.makeText(RegisterActivity.this,"비밀번호가 일치하지 않습니다",Toast.LENGTH_SHORT).show();
                     mEtRePwd.setText("");
                     mEtPwd.setText("");
@@ -160,9 +162,16 @@ public class RegisterActivity extends AppCompatActivity
                     return;
                 }
                 //연락처 확인
-                if(mEtPhonenumber.getText().toString().length()==0){
+                if(strPhoneNumber.length()==0){
                     Toast.makeText(RegisterActivity.this,"연락처를 입력하세요",Toast.LENGTH_SHORT).show();
                     mEtPhonenumber.requestFocus();
+                    return;
+                }
+
+                //별칭 확인
+                if(strAlising.length()==0){
+                    Toast.makeText(RegisterActivity.this,"이름 입력하세요",Toast.LENGTH_SHORT).show();
+                    mEtAliasing.requestFocus();
                     return;
                 }
 
@@ -175,11 +184,14 @@ public class RegisterActivity extends AppCompatActivity
                             FirebaseUser firebaseUser=mFirebaseAuth.getCurrentUser();
                             UserAccount account = new UserAccount();
                             account.setIdToken(firebaseUser.getUid());
+                            account.setPhoneNumber(firebaseUser.getPhoneNumber());
+                            account.setAlising(firebaseUser.getDisplayName());
                             account.setId(firebaseUser.getEmail());
                             account.setPwd(strPwd);
                             account.setPhoneNumber(strPhoneNumber);
                             account.setPoint(0);
                             account.setLevel(1);
+                            account.setAlising(strAlising);
 
                             mDatabaseRef.child("userAccount").child(firebaseUser.getUid()).setValue(account);
 

@@ -22,6 +22,16 @@
             android:inputType="textEmailAddress" />
 
         <EditText
+            android:id="@+id/etAliasing"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:autofillHints="이름(별칭)"
+            android:hint="이름(별칭)"
+            android:inputType="textPersonName" />
+
+
+        <EditText
             android:id="@+id/etPassword"
             android:layout_width="300dp"
             android:layout_height="50dp"

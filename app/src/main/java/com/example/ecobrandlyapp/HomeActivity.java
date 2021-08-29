@@ -6,11 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,31 +31,35 @@ public class HomeActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseRef; //실시간 데이터 베이스
     private TextView metId,mEtPoint;
     private int Point;
+    private String userUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        TableLayout tableLayout2 = (TableLayout)findViewById(R.id.tablelayout2);
+        TableRow titleRow2 = (TableRow)findViewById(R.id.titleRow2);
+        TableRow noDataComment = (TableRow)findViewById(R.id.noDataComment);
 
-        System.out.println("ok");
         /*현재 고객 연동*/
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseRef= FirebaseDatabase.getInstance().getReference("fourpeople");
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
 
+
+
         metId=findViewById(R.id.tv_id);
         mEtPoint=findViewById(R.id.tv_point);
-        metId.setText(user.getEmail()+"님의 포인트 현황");
-       // mEtPoint.setText(userPoint);
 
         mDatabaseRef.child("userAccount").child(user.getUid()).addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                userUid=snapshot.child("idToken").getValue(String.class);
                 String userPoint = Integer.toString(snapshot.child("point").getValue(int.class));
-                String userId = snapshot.child("id").getValue(String.class);
+                String userName = snapshot.child("alising").getValue(String.class);
+                metId.setText(userName+"님의 포인트 현황");
                 mEtPoint.setText(userPoint);
             }
 
@@ -60,6 +70,36 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
+        //*로그 출력부분*//
+
+        mDatabaseRef.child("userLog").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                tableLayout2.removeAllViews();
+                tableLayout2.addView(titleRow2);
+                //String userUid= user.getIdToken(;
+
+                int row_cnt = 0;
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    if(userUid.equals(snapshot.child("userUid").getValue((String.class)))){
+                        String storeName=snapshot.child("storeName").getValue(String.class);
+                        String time=snapshot.child("timeStamp").getValue(String.class);
+                        int point=snapshot.child("increasePoint").getValue(Integer.class);
+                        int points=snapshot.child("points").getValue(Integer.class);
+                        printPresentRow(tableLayout2, time, storeName, point,points);
+                        row_cnt += 1;
+                    }
+                }
+                if(row_cnt == 0){
+                    tableLayout2.addView(noDataComment);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
 
@@ -88,4 +128,41 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    public void printPresentRow(TableLayout tableLayout, String time, String storename, Integer point,Integer points) {
+        TableRow tableRow = new TableRow(this);
+        tableRow.setLayoutParams(new TableRow.LayoutParams(
+                TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT
+        ));
+
+        TextView textView1 = new TextView(this);
+        textView1.setText(String.valueOf(time));
+        textView1.setGravity(Gravity.CENTER);
+        textView1.setTextSize(14);
+        tableRow.addView(textView1);
+
+        TextView textView2 = new TextView(this);
+        textView2.setText(String.valueOf(storename));
+        textView2.setGravity(Gravity.CENTER);
+        textView2.setTextSize(14);
+        tableRow.addView(textView2);
+
+        TextView textView3 = new TextView(this);
+        textView3.setText(String.valueOf(point));
+        textView3.setGravity(Gravity.CENTER);
+        textView3.setTextSize(14);
+        tableRow.addView(textView3);
+
+        TextView textView4= new TextView(this);
+        textView4.setText(String.valueOf(points));
+        textView4.setGravity(Gravity.CENTER);
+        textView4.setTextSize(14);
+        tableRow.addView(textView4);
+
+        tableLayout.addView(tableRow);
+    }
+
+
 }
