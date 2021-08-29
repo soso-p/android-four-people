@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
                                         finish();
                                     }
 
-
                                     else if(level==1){//일반회원
                                         Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                                         startActivity(intent);
@@ -85,8 +84,6 @@ public class MainActivity extends AppCompatActivity {
                                         //finish();
                                     }
 
-
-
                                 }
 
                                 @Override
@@ -94,18 +91,6 @@ public class MainActivity extends AppCompatActivity {
                                     //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
                                 }
                             });
-
-                            /*
-                            if(level==2) {//기업
-                                Intent intent = new Intent(MainActivity.this, HomeEnterpriseActivity.class);
-                                startActivity(intent);
-                                //finish();
-                            }else if(level==1){//일반회원
-                                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                                startActivity(intent);
-                                //finish();
-                            }
-                            */
 
                         }else{
                             Toast.makeText(MainActivity.this," 로그인 실패",Toast.LENGTH_SHORT).show();
