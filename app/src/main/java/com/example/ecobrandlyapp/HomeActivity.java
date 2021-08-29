@@ -40,7 +40,7 @@ public class HomeActivity extends AppCompatActivity {
 
         metId=findViewById(R.id.tv_id);
         mEtPoint=findViewById(R.id.tv_point);
-        metId.setText(user.getEmail());
+        metId.setText(user.getEmail()+"님의 포인트 현황");
        // mEtPoint.setText(userPoint);
 
         mDatabaseRef.child("userAccount").child(user.getUid()).addValueEventListener(new ValueEventListener() {
