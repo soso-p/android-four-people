@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -24,6 +25,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Calendar;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -127,6 +130,20 @@ public class HomeActivity extends AppCompatActivity {
                 //finish();
             }
         });
+
+        Calendar cal = Calendar.getInstance();
+
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH) + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int min = cal.get(Calendar.MINUTE);
+
+        int resultDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH) - day;
+
+        /*달의 말일 23:00:00 ~ 23:59:59동안 QR Scan 금지(: point 인정 안됨!)*/
+        if((resultDay == 0 && hour == 23 && min>=0 && min<=59))
+            btn_qr1.setEnabled(false);
     }
 
 
