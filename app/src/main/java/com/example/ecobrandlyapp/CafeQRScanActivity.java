@@ -97,6 +97,7 @@ public class CafeQRScanActivity extends AppCompatActivity{
                     e.printStackTrace();
                 }
                    */
+
             /*개행문자로 구분*/
 
             String resultDataArray[]=result.getContents().split("\n");
@@ -108,15 +109,13 @@ public class CafeQRScanActivity extends AppCompatActivity{
 
 
 
-
-
             //현재 고객 연동
             mFirebaseAuth = FirebaseAuth.getInstance();
             mDatabaseRef= FirebaseDatabase.getInstance().getReference("fourpeople");
             FirebaseUser user = mFirebaseAuth.getCurrentUser();
 
 
-            String storeNumber=resultDataArray[0].trim();
+            String storeNumber=resultDataArray[0].trim(); //사업자번호
 
 
             //회사 정보 찾기, 있는회사인지 확인

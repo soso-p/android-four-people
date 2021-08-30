@@ -74,7 +74,7 @@ public class UserAccount {
 
     public String getAlising() {
         return Alising;
-    }
+    } //후에 aliasing로 수정필요
 
     public void setAlising(String alising) {
         Alising = alising;
