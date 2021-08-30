@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +31,7 @@ import java.util.Date;
 
 public class EnterPhoneNumberActivity extends AppCompatActivity {
     private Button btn[]=new Button[12];
-    private TextView textview;
+    private EditText editText;
     private TableLayout tableLayout;
     private String current="";
     private String storeUid,storeName, userUid, userName;
@@ -62,7 +64,7 @@ public class EnterPhoneNumberActivity extends AppCompatActivity {
 
         //layout 초기화
         tableLayout = (TableLayout)findViewById(R.id.ePhoneLayout);
-        textview =(TextView)findViewById(R.id.inputNumber);
+        editText =(EditText)findViewById(R.id.inputNumber);
         btn[0] =(Button)findViewById(R.id.number0);
         btn[1] =(Button)findViewById(R.id.number1);
         btn[2] =(Button)findViewById(R.id.number2);
@@ -76,30 +78,34 @@ public class EnterPhoneNumberActivity extends AppCompatActivity {
 
         btn[10] =(Button)findViewById(R.id.delete);
         btn[11] =(Button)findViewById(R.id.input);
-
+        
         for(i=0; i<10; i++) {
             btn[i].setOnClickListener(new Button.OnClickListener() {
                 public void onClick(View v) {
+                    current=editText.getText().toString();
                     Button btn = (Button) v;
-                    textview.append(btn.getText().toString());
-                    //textview.setText(textview.getText()+current);
+                    /*전화번호 하이픈(-)추가 -> 전화번호 형식에 맞지않게 입력이 되면 강제 종료가 되는 오류가 있음..*/
+                    if(current.length()>2) editText.addTextChangedListener(new PhoneNumberFormattingTextWatcher()); //전화번호 "-" 추가
+                    editText.append(btn.getText().toString());
+                    //editText.setText(textview.getText()+current);
                 }
             });
         }
 
-        btn[10].setOnClickListener(new Button.OnClickListener(){ // 지우기
+        btn[10].setOnClickListener(new Button.OnClickListener(){ // 입력값 지우기
             public void onClick(View v){
-                current=textview.getText().toString();
+                current=editText.getText().toString();
                 if(current.length()>0){
                     current=current.substring(0,current.length()-1);
-                    textview.setText(current);
+                    if(current.length()>2) editText.addTextChangedListener(new PhoneNumberFormattingTextWatcher()); //전화번호 "-" 추가
+                    editText.setText(current);
                 }
             }
         });
 
         btn[11].setOnClickListener(new View.OnClickListener(){ // 입력
             public void onClick(View v){
-                /*textview에 입력한 전화번호와 데이터베이스 정보 동일한 고객을 가져온다.
+                /* editText에 입력한 전화번호와 데이터베이스 정보 동일한 고객을 가져온다.
                  * 만약 DB에 저장된 전화번호가 없다면 홈으로 돌아간다.
                  * 있다면 "1 포인트가 증정되었습니다."
                  * */
@@ -112,7 +118,8 @@ public class EnterPhoneNumberActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         //고객 정보 있는지 DB확인
                         for (DataSnapshot snapshot: dataSnapshot.getChildren()){
-                            if(snapshot.child("phoneNumber").getValue(String.class).equals(textview.getText().toString())){
+                            //DB에는 전화번호에 -를 저장하고 있지 않기 때문에 제거하고 비교
+                            if(snapshot.child("phoneNumber").getValue(String.class).equals(editText.getText().toString().replaceAll("-",""))){
                                 userUid=snapshot.child("idToken").getValue(String.class);
                                 userName=snapshot.child("alising").getValue(String.class);
                                 level=snapshot.child("level").getValue(Integer.class);
