@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcoBrandlyApp">
         <activity
+            android:name=".EnterPhoneNumberActivity"
+            android:exported="true" />
+        <activity
             android:name=".CreateQrActivity"
             android:exported="true" />
         <activity
@@ -39,11 +42,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-         <activity
-             android:name=".AdminActivity"/>
-        <activity android:name=".CafeQRScanActivity"/>
-        <!--qr스캐너 세로모드-->
-        <activity android:name="com.journeyapps.barcodescanner.CaptureActivity"
+        <activity android:name=".AdminActivity" />
+        <activity android:name=".CafeQRScanActivity" /> <!-- qr스캐너 세로모드 -->
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
     </application>
