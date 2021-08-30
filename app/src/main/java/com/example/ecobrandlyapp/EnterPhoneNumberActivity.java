@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.slider.Slider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,18 +26,23 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 public class EnterPhoneNumberActivity extends AppCompatActivity {
     private Button btn[]=new Button[12];
     private TextView textview;
     private TableLayout tableLayout;
     private String current="";
     private String storeUid,storeName, userUid, userName;
-    private int i=0, flag=1,  level;
+    private int i=0, flag=1, cnt, level;
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseRef, eDatabaseRef;
+
     long now;
     Date date;
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+    public EnterPhoneNumberActivity() {
+    }
 
     private String getTime(){
         now = System.currentTimeMillis();
@@ -94,14 +100,17 @@ public class EnterPhoneNumberActivity extends AppCompatActivity {
         btn[11].setOnClickListener(new View.OnClickListener(){ // 입력
             public void onClick(View v){
                 /*textview에 입력한 전화번호와 데이터베이스 정보 동일한 고객을 가져온다.
-                * 만약 DB에 저장된 전화번호가 없다면 홈으로 돌아간다.
-                * 있다면 "1 포인트가 증정되었습니다."
-                * */
-
-                mDatabaseRef.child("userAccount").addValueEventListener(new ValueEventListener() {
+                 * 만약 DB에 저장된 전화번호가 없다면 홈으로 돌아간다.
+                 * 있다면 "1 포인트가 증정되었습니다."
+                 * */
+                mDatabaseRef.child("userAccount").addListenerForSingleValueEvent(new ValueEventListener() {
+                    /*addValueEvnetListener-> 값의 변화가 있을 때마다 불러온다. 따라서 포인트 적립의 경우 무한루프에 빠질 수 밖에 없음
+                     * 정확한 해결방안 : 콜백함수를 이용해라..? ->인터페이스 호출 ??
+                     * 내 해결방안 : addValueEventListener를 addListenerForSingleValueEvent로 수정 (리스너 한번만 호출되도록)
+                     * */
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        //DB에 고객이면서 전화번호 있는지 확인
+                        //고객 정보 있는지 DB확인
                         for (DataSnapshot snapshot: dataSnapshot.getChildren()){
                             if(snapshot.child("phoneNumber").getValue(String.class).equals(textview.getText().toString())){
                                 userUid=snapshot.child("idToken").getValue(String.class);
@@ -122,7 +131,6 @@ public class EnterPhoneNumberActivity extends AppCompatActivity {
                             mDatabaseRef.child("userAccount").child(userUid).child("point").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
-
                                     if(task.isSuccessful()){
                                         int userPoint = Integer.parseInt(String.valueOf(task.getResult().getValue()));
                                         mDatabaseRef.child("userAccount").child(userUid).child("point").setValue(userPoint+1);
@@ -154,8 +162,6 @@ public class EnterPhoneNumberActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         }
-
-
                     }
 
                     @Override
@@ -163,9 +169,8 @@ public class EnterPhoneNumberActivity extends AppCompatActivity {
 
                     }
                 });
-
-
             }
         });
+
     }
 }
