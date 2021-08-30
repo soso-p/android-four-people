@@ -131,6 +131,8 @@ public class EnterPhoneNumberActivity extends AppCompatActivity {
                         storeUid = nowUser.getIdToken();
                         storeName = nowUser.getAlising();
 
+                        mDatabaseRef.removeEventListener(this);
+
                         String time = getTime();
 
                         //저장된 고객이면 포인트 적립
@@ -151,17 +153,17 @@ public class EnterPhoneNumberActivity extends AppCompatActivity {
                                         log.setPoints(userPoint+1);
                                         log.setTimeStamp(time);
                                         mDatabaseRef.child("userLog").push().setValue(log);
-
-                                        Toast.makeText(EnterPhoneNumberActivity.this,"적립완료", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(EnterPhoneNumberActivity.this, HomeEnterpriseActivity.class);
-                                        startActivity(intent);
-                                        finish();
                                     }
                                     else{
                                         Log.e("firebase", "Error getting data", task.getException());
                                     }
                                 }
                             });
+
+                            Toast.makeText(EnterPhoneNumberActivity.this,"적립완료", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(EnterPhoneNumberActivity.this, HomeEnterpriseActivity.class);
+                            startActivity(intent);
+                            finish();
                         }
                         else {
                             Toast.makeText(EnterPhoneNumberActivity.this,"등록된 회원정보가 없습니다.", Toast.LENGTH_SHORT).show();

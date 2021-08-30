@@ -127,7 +127,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this,CafeQRScanActivity.class);
                 startActivity(intent);
-                //finish();
+                finish();
             }
         });
 

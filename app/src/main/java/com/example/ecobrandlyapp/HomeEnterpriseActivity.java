@@ -47,6 +47,7 @@ public class HomeEnterpriseActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent=new Intent(HomeEnterpriseActivity.this,EnterPhoneNumberActivity.class);
                 startActivity(intent);
+                finish();
             }
         }));
 
