@@ -31,7 +31,7 @@ public class EnterPhoneNumberActivity extends AppCompatActivity {
     private TableLayout tableLayout;
     private String current="";
     private String storeUid,storeName, userUid, userName;
-    private int i=0, flag=1;
+    private int i=0, flag=1,  level;
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseRef, eDatabaseRef;
     long now;
@@ -71,18 +71,19 @@ public class EnterPhoneNumberActivity extends AppCompatActivity {
         btn[10] =(Button)findViewById(R.id.delete);
         btn[11] =(Button)findViewById(R.id.input);
 
-        current=textview.getText().toString();
-
         for(i=0; i<10; i++) {
             btn[i].setOnClickListener(new Button.OnClickListener() {
                 public void onClick(View v) {
-                    textview.append(btn[i].getText().toString());
+                    Button btn = (Button) v;
+                    textview.append(btn.getText().toString());
+                    //textview.setText(textview.getText()+current);
                 }
             });
         }
 
         btn[10].setOnClickListener(new Button.OnClickListener(){ // 지우기
             public void onClick(View v){
+                current=textview.getText().toString();
                 if(current.length()>0){
                     current=current.substring(0,current.length()-1);
                     textview.setText(current);
@@ -100,53 +101,60 @@ public class EnterPhoneNumberActivity extends AppCompatActivity {
                 mDatabaseRef.child("userAccount").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        //DB에 전화번호 있는지 확인
+                        //DB에 고객이면서 전화번호 있는지 확인
                         for (DataSnapshot snapshot: dataSnapshot.getChildren()){
-                            if(snapshot.child("phoneNumber").equals(textview.getText().toString())) {
+                            if(snapshot.child("phoneNumber").getValue(String.class).equals(textview.getText().toString())){
                                 userUid=snapshot.child("idToken").getValue(String.class);
                                 userName=snapshot.child("alising").getValue(String.class);
+                                level=snapshot.child("level").getValue(Integer.class);
                                 flag=0;
                             }
                         }
                         // 가게 정보 불러오기
-                        UserAccount nowUser = dataSnapshot.getValue(UserAccount.class);
+                        UserAccount nowUser = dataSnapshot.child(user.getUid()).getValue(UserAccount.class);
                         storeUid = nowUser.getIdToken();
                         storeName = nowUser.getAlising();
 
                         String time = getTime();
 
-                        /* 포인트 추가 */
-                        mDatabaseRef.child("userAccount").child(userUid).child("point").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                if(task.isSuccessful() && flag==0){
-                                    int userPoint = Integer.parseInt(String.valueOf(task.getResult().getValue()));
-                                    mDatabaseRef.child("userAccount").child(userUid).child("point").setValue(userPoint+1);
+                        //저장된 고객이면 포인트 적립
+                        if(flag==0 && level==1){
+                            mDatabaseRef.child("userAccount").child(userUid).child("point").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DataSnapshot> task) {
 
-                                    userLog log = new userLog();
-                                    log.setStoreUid(storeUid);
-                                    log.setStoreName(storeName);
-                                    log.setUserUid(userUid);
-                                    log.setUserName(userName);
-                                    log.setIncreasePoint(1);
-                                    log.setPoints(userPoint+1);
-                                    log.setTimeStamp(time);
-                                    mDatabaseRef.child("userLog").push().setValue(log);
-                                    
-                                    Toast.makeText(EnterPhoneNumberActivity.this,"적립완료", Toast.LENGTH_SHORT).show();
-                                    finish();
+                                    if(task.isSuccessful()){
+                                        int userPoint = Integer.parseInt(String.valueOf(task.getResult().getValue()));
+                                        mDatabaseRef.child("userAccount").child(userUid).child("point").setValue(userPoint+1);
+
+                                        userLog log = new userLog();
+                                        log.setStoreUid(storeUid);
+                                        log.setStoreName(storeName);
+                                        log.setUserUid(userUid);
+                                        log.setUserName(userName);
+                                        log.setIncreasePoint(1);
+                                        log.setPoints(userPoint+1);
+                                        log.setTimeStamp(time);
+                                        mDatabaseRef.child("userLog").push().setValue(log);
+
+                                        Toast.makeText(EnterPhoneNumberActivity.this,"적립완료", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(EnterPhoneNumberActivity.this, HomeEnterpriseActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                    else{
+                                        Log.e("firebase", "Error getting data", task.getException());
+                                    }
                                 }
-                                else if(!task.isSuccessful() || flag==1 ){
-                                    Toast.makeText(EnterPhoneNumberActivity.this,"등록된 전화번호가 없습니다.", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(EnterPhoneNumberActivity.this, HomeActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                                else{
-                                    Log.e("firebase", "Error getting data", task.getException());
-                                }
-                            }
-                        });
+                            });
+                        }
+                        else {
+                            Toast.makeText(EnterPhoneNumberActivity.this,"등록된 회원정보가 없습니다.", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(EnterPhoneNumberActivity.this, HomeEnterpriseActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+
 
                     }
 
