@@ -7,7 +7,7 @@
     tools:context=".EnterPhoneNumberActivity">
 
     <TableLayout
-        android:id="@+id/enterPhoneNumber"
+        android:id="@+id/ePhoneLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="1dp"
@@ -133,8 +133,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:id="@+id/numberStar"
-                android:text="*"
+                android:id="@+id/delete"
+                android:text="지우기"
                 android:textSize="32sp" />
 
             <Button
@@ -149,8 +149,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:id="@+id/numberPound"
-                android:text="#"
+                android:id="@+id/input"
+                android:text="입력"
                 android:textSize="32sp" />
 
         </TableRow>

@@ -41,5 +41,14 @@ public class HomeEnterpriseActivity extends AppCompatActivity {
             }
         });
 
+        Button phoneInput =findViewById(R.id.phoneInput);
+        phoneInput.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(HomeEnterpriseActivity.this,EnterPhoneNumberActivity.class);
+                startActivity(intent);
+            }
+        }));
+
     }
 }
