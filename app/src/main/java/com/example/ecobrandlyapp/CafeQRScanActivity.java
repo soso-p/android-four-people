@@ -30,11 +30,12 @@ public class CafeQRScanActivity extends AppCompatActivity{
 
 
     private FirebaseAuth mFirebaseAuth;
-    private DatabaseReference mDatabaseRef; //실시간 데이터 베이스
+    private DatabaseReference mDatabaseRef, eDatabaseRef; //실시간 데이터 베이스
     private TextView storeId, timestamp, phoneNumber;
     private String storeUid,storeName,userName,userUid;
     private Button btn_back;
     private IntentIntegrator qrScan;
+    private int flag=0; //기업정보 있는지
     long now;
     Date date;
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -49,9 +50,9 @@ public class CafeQRScanActivity extends AppCompatActivity{
         qrScan.setPrompt("박스 안에 QR 코드를 스캔하세요!");
         qrScan.initiateScan();
 
-        storeId = (TextView) findViewById(R.id.storeId);
+        storeId = (TextView) findViewById(R.id.storeUid);
         timestamp = (TextView) findViewById(R.id.timestamp);
-        phoneNumber = (TextView)  findViewById(R.id.phoneNumber);
+        phoneNumber = (TextView)  findViewById(R.id.storeName);
         btn_back = (Button) findViewById(R.id.btn_back);
 
 
@@ -69,8 +70,6 @@ public class CafeQRScanActivity extends AppCompatActivity{
         date = new Date(now);
         return format.format(date);
     }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -107,148 +106,78 @@ public class CafeQRScanActivity extends AppCompatActivity{
             timestamp.setText(time);
             phoneNumber.setText(resultDataArray[1]);
 
+            storeUid=resultDataArray[0];
+            storeName=resultDataArray[1];
 
-
-            //현재 고객 연동
+            //현재 고객 = qr 코드 스캔하고 있는
             mFirebaseAuth = FirebaseAuth.getInstance();
             mDatabaseRef= FirebaseDatabase.getInstance().getReference("fourpeople");
             FirebaseUser user = mFirebaseAuth.getCurrentUser();
 
-
-            String storeNumber=resultDataArray[0].trim(); //사업자번호
-
-
-            //회사 정보 찾기, 있는회사인지 확인
-            mDatabaseRef.child("userAccount").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                        if(snapshot.child("level").getValue(Integer.class)==2 && storeNumber.equals(snapshot.child("businessReg").getValue(String.class))){
-                            storeUid=snapshot.child("idToken").getValue(String.class);
-                            storeName=snapshot.child("alising").getValue(String.class);
-                        }
-                        /*
-                        else{
-                            Toast.makeText(CafeQRScanActivity.this,storeNumber+snapshot.child("businessReg").getValue(String.class),Toast.LENGTH_SHORT).show();
-                        }*/
-
+                //user 정보 찾기
+                mDatabaseRef.child("userAccount").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        UserAccount nowUser = snapshot.getValue(UserAccount.class);//객체에 저장
+                        userUid = nowUser.getIdToken();
+                        userName = nowUser.getAlising();
                     }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
-                }
-            });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
+                    }
+                });
 
+            /*
+             * onDataChange(DataSnapshot snapshot) => 비동기적. firebase에서 데이터를 "다시" 가져올 때 호출된다.
+             * */
 
-/*
-            //회사 정보 찾기사 ,,만약 uid를 포함한다면
-            mDatabaseRef.child("userAccount").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+            eDatabaseRef= FirebaseDatabase.getInstance().getReference("fourpeople");
+
+            //기업이 존재하는지 check
+            eDatabaseRef.child("userAccount").child(resultDataArray[0]).child("idToken").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    UserAccount enterprise = snapshot.getValue(UserAccount.class);//객체에 저장
-                    storeUid= enterprise.getIdToken();
-                    storeName=enterprise.getAlising();
-                }
+                    if(snapshot.getValue()==null) flag=1;
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
-                }
-            });
-            */
-
-
-            //user 정보 찾기
-            mDatabaseRef.child("userAccount").child(user.getUid()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    UserAccount nowUser = snapshot.getValue(UserAccount.class);//객체에 저장
-                    userUid= nowUser.getIdToken();
-                    userName=nowUser.getAlising();
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
-                }
-            });
-
-
-            mDatabaseRef.child("userAccount").child(user.getUid()).child("point").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    if(!task.isSuccessful()){
-                        Log.e("firebase", "Error getting data", task.getException());
-                    }
-                    else{
-                        int userPoint = Integer.parseInt(String.valueOf(task.getResult().getValue()));
-                        mDatabaseRef.child("userAccount").child(user.getUid()).child("point").setValue(userPoint+1);
-                        //log에 데이터 저장..
-                        userLog log = new userLog();
-                        log.setStoreUid(storeUid);
-                        log.setStoreName(storeName);
-                        log.setUserUid(userUid);
-                        log.setUserName(userName);
-                        log.setIncreasePoint(1);
-                        log.setPoints(userPoint+1);
-                        log.setTimeStamp(time);
-                        mDatabaseRef.child("userLog").push().setValue(log);
-
-
-                    }
-                }
-            });
-
-
-            //있는 회사인지 확인 --> 아직 테스팅 못해봄..
-
-                /*mDatabaseRef.child("userAccount").child(String.valueOf(storeNumber)).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    if(!task.isSuccessful()){
-                        //Toast.makeText(CafeQRScanActivity.this,String.valueOf(storeNumber), Toast.LENGTH_SHORT).show();
-                        Toast.makeText(CafeQRScanActivity.this,"가입된 기업이 아닙니다.", Toast.LENGTH_SHORT).show();
-
-                        Log.e("firebase", "Error getting data", task.getException());
-                        //뭔가 되는듯 안되는듯..
-
-                        //Intent intent = new Intent(CafeQRScanActivity.this, HomeActivity.class);
-                        //startActivity(intent);
-
-                        //storeId.setText("");
-                        //timestamp.setText("");
-                        //phoneNumber.setText("");
-
-                    }
-                    else{
+                    /* 포인트 추가 */
                     mDatabaseRef.child("userAccount").child(user.getUid()).child("point").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
-                            if(!task.isSuccessful()){
-                                Log.e("firebase", "Error getting data", task.getException());
-                            }
-                            else{
+                            if(task.isSuccessful() && flag==0){
                                 int userPoint = Integer.parseInt(String.valueOf(task.getResult().getValue()));
                                 mDatabaseRef.child("userAccount").child(user.getUid()).child("point").setValue(userPoint+1);
-
-                                UserLog log = new UserLog();
-                                log.setStoreUid();
-                                log.setStoreName();
-                                log.setUserUid(user.getUid());
-                                log.setUserName(user.getDisplayName());
+                                //log에 데이터 저장..
+                                userLog log = new userLog();
+                                log.setStoreUid(storeUid);
+                                log.setStoreName(storeName);
+                                log.setUserUid(userUid);
+                                log.setUserName(userName);
                                 log.setIncreasePoint(1);
+                                log.setPoints(userPoint+1);
                                 log.setTimeStamp(time);
-                                mDatabaseRef.child("UserLog").push().setValue(log);
-
-
+                                mDatabaseRef.child("userLog").push().setValue(log);
+                            }
+                            else if(!task.isSuccessful() || flag==1 ){
+                                Toast.makeText(CafeQRScanActivity.this,"가입된 기업이 아닙니다.", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(CafeQRScanActivity.this, HomeActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                            else{
+                                Log.e("firebase", "Error getting data", task.getException());
                             }
                         }
                     });
-                    }
+
                 }
-            });*/
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
 
             /*고민사항
