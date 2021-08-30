@@ -96,7 +96,7 @@
                 android:text="00"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
-                android:textSize="48sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -214,6 +214,7 @@
                     android:id="@+id/btn_qr1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
                     android:text="QR 스캔 버튼" />
 
                 <Button
