@@ -14,11 +14,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.util.Hashtable;
 
 public class CreateQrActivity extends AppCompatActivity {
 
@@ -48,7 +51,11 @@ public class CreateQrActivity extends AppCompatActivity {
                 alias=us.getAlising();
 
                 try {
-                    BitMatrix bitMatrix = multiFormatWriter.encode(uid+"\n"+alias, BarcodeFormat.QR_CODE, 200, 200);
+                    /* 인코딩 */
+                    Hashtable ht = new Hashtable();
+                    ht.put(EncodeHintType.CHARACTER_SET, "utf-8");
+
+                    BitMatrix bitMatrix = multiFormatWriter.encode(uid+"\n"+alias, BarcodeFormat.QR_CODE, 200, 200, ht);
                     BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                     Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
                     img.setImageBitmap(bitmap);
