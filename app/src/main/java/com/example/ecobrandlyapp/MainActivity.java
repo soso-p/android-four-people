@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                         /*210826 수정 [일반회원/기업 layout 구분]*/
                         if(task.isSuccessful()){
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                            mDatabaseRef.child("userAccount").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+                            mDatabaseRef.child("userAccount").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     long value = snapshot.child("level").getValue(long.class);
@@ -76,12 +76,12 @@ public class MainActivity extends AppCompatActivity {
                                     else if(level==1){//일반회원
                                         Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                                         startActivity(intent);
-                                        //finish();
+                                        finish();
                                     }
                                     else if(level==2) {//기업
                                         Intent intent = new Intent(MainActivity.this, HomeEnterpriseActivity.class);
                                         startActivity(intent);
-                                        //finish();
+                                        finish();
                                     }
 
                                 }
