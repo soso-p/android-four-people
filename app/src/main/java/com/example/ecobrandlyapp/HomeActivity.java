@@ -50,10 +50,18 @@ public class HomeActivity extends AppCompatActivity {
         mDatabaseRef= FirebaseDatabase.getInstance().getReference("fourpeople");
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
 
-
+        /*접근권한 설정*/
+        if(user.getUid() == null){
+            //로그아웃
+            mFirebaseAuth.signOut();
+            Intent logoutIntent = new Intent(HomeActivity.this, MainActivity.class);
+            startActivity(logoutIntent);
+            finish();
+        }
 
         metId=findViewById(R.id.tv_id);
         mEtPoint=findViewById(R.id.tv_point);
+
 
         mDatabaseRef.child("userAccount").child(user.getUid()).addValueEventListener(new ValueEventListener() {
 

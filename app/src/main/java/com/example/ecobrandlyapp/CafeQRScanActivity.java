@@ -178,36 +178,6 @@ public class CafeQRScanActivity extends AppCompatActivity{
 
                 }
             });
-
-        /*
-        //회사 정보 찾기, 있는회사인지 확인
-                    mDatabaseRef.child("userAccount").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                                if(snapshot.child("level").getValue(Integer.class)==2 && resultDataArray[0].equals(snapshot.child("idToken").getValue(String.class))){
-                                    storeUid=snapshot.child("idToken").getValue(String.class);
-                                    storeName=snapshot.child("alising").getValue(String.class);
-                                }
-
-                                else{
-                                    Toast.makeText(CafeQRScanActivity.this,storeNumber+snapshot.child("businessReg").getValue(String.class),Toast.LENGTH_SHORT).show();
-                                }
-
-                    }
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
-                }
-            });
-         */
-
-            /*고민사항
-            * 아예 처음에 인식했을때 없는 회사라면 그냥 바로 돌려버릴지 아니면 다시 qr을 찍게 할지..?
-            * 회사전화번호로 확인했는데 고유키 같은걸로 확인할지-- 고유키로 하려면 qr에 내용 더 추가해야함
-            * */
-
             }
 
         } else {
