@@ -32,11 +32,13 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="157dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="228dp"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:foregroundGravity="center"
+                    android:src="@drawable/web"
                     android:visibility="visible"
-                    android:src="@drawable/test"
                     tools:visibility="visible" />
 
                 <TextView

@@ -33,6 +33,7 @@ public class CafeQRScanActivity extends AppCompatActivity{
     private DatabaseReference mDatabaseRef, eDatabaseRef; //실시간 데이터 베이스
     private TextView storeId, timestamp, phoneNumber;
     private String storeUid,storeName,userName,userUid;
+    private int userPoint;
     private Button btn_back;
     private IntentIntegrator qrScan;
     private int flag=0; //기업정보 있는지
@@ -121,6 +122,7 @@ public class CafeQRScanActivity extends AppCompatActivity{
                         UserAccount nowUser = snapshot.getValue(UserAccount.class);//객체에 저장
                         userUid = nowUser.getIdToken();
                         userName = nowUser.getAlising();
+                        userPoint = nowUser.getPoint();
                     }
 
                     @Override
@@ -146,7 +148,8 @@ public class CafeQRScanActivity extends AppCompatActivity{
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
                             if(task.isSuccessful() && flag==0){
-                                int userPoint = Integer.parseInt(String.valueOf(task.getResult().getValue()));
+
+
                                 mDatabaseRef.child("userAccount").child(user.getUid()).child("point").setValue(userPoint+1);
                                 //log에 데이터 저장..
                                 userLog log = new userLog();
