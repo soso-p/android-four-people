@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                                         startActivity(intent);
                                         finish();
                                     }
+
                                     else if(level==2) {//기업
                                         Intent intent = new Intent(MainActivity.this, HomeEnterpriseActivity.class);
                                         startActivity(intent);
