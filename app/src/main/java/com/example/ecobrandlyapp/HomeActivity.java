@@ -63,7 +63,8 @@ public class HomeActivity extends AppCompatActivity {
         mEtPoint=findViewById(R.id.tv_point);
 
 
-        mDatabaseRef.child("userAccount").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+
+        mDatabaseRef.child("userAccount").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -72,6 +73,7 @@ public class HomeActivity extends AppCompatActivity {
                 String userName = snapshot.child("alising").getValue(String.class);
                 metId.setText(userName+"님의 포인트 현황");
                 mEtPoint.setText(userPoint);
+
             }
 
             @Override
@@ -83,7 +85,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //*로그 출력부분*//
 
-        mDatabaseRef.child("userLog").addValueEventListener(new ValueEventListener() {
+        mDatabaseRef.child("userLog").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 tableLayout2.removeAllViews();
