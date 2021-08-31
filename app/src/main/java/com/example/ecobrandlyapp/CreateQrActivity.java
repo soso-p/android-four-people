@@ -24,7 +24,7 @@ public class CreateQrActivity extends AppCompatActivity {
 
     DatabaseReference mDatabaseRef;
     private ImageView img;
-    private String num, phoneNum, text;
+    private String uid, alias, text;
     private StringBuilder str;
 
     @Override
@@ -44,11 +44,11 @@ public class CreateQrActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserAccount us = snapshot.getValue(UserAccount.class);//객체에 저장
-                num= us.getBusinessReg();
-                phoneNum=us.getPhoneNumber();
+                uid= us.getIdToken();
+                alias=us.getAlising();
 
                 try {
-                    BitMatrix bitMatrix = multiFormatWriter.encode(num+"\n"+phoneNum, BarcodeFormat.QR_CODE, 200, 200);
+                    BitMatrix bitMatrix = multiFormatWriter.encode(uid+"\n"+alias, BarcodeFormat.QR_CODE, 200, 200);
                     BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                     Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
                     img.setImageBitmap(bitmap);

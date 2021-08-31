@@ -16,10 +16,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="[가게고유번호]" />
+            android:text="[가게Uid번호]" />
 
         <TextView
-            android:id="@+id/storeId"
+            android:id="@+id/storeUid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#000000"
@@ -44,10 +44,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="[핸드폰번호]" />
+            android:text="[가게이름]" />
 
         <TextView
-            android:id="@+id/phoneNumber"
+            android:id="@+id/storeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#000000"
