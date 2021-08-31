@@ -34,6 +34,7 @@ public class CafeQRScanActivity extends AppCompatActivity{
     private TextView storeId, timestamp, phoneNumber;
     private String storeUid,storeName,userName,userUid;
     private int userPoint;
+    private String logTime = "00";
     private Button btn_back;
     private IntentIntegrator qrScan;
     private int flag=0; //기업정보 있는지
@@ -137,7 +138,33 @@ public class CafeQRScanActivity extends AppCompatActivity{
 
             eDatabaseRef= FirebaseDatabase.getInstance().getReference("fourpeople");
 
-            //기업이 존재하는지 check
+            //최근 고객의 상점 로그기록 끌어오기
+
+            mDatabaseRef.child("userLog").orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                        if(userUid.equals(snapshot.child("userUid").getValue(String.class))&& storeUid.equals(snapshot.child("storeUid").getValue(String.class))){
+                            logTime = snapshot.child("timeStamp").getValue(String.class);
+                            //logTime = Time;
+                            //Toast.makeText(CafeQRScanActivity.this,snapshot.child("timeStamp").getValue(String.class)+logTime,Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
+
+
+
+                //기업이 존재하는지 check
             eDatabaseRef.child("userAccount").child(resultDataArray[0]).child("idToken").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -148,7 +175,13 @@ public class CafeQRScanActivity extends AppCompatActivity{
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
                             if(task.isSuccessful() && flag==0){
-
+                                /*long logtime = Long.parseLong(logTime.replaceAll("\\p{Z}",""));
+                                if(logtime+1000*60*10 > Long.parseLong(time)) {
+                                    Toast.makeText(CafeQRScanActivity.this, "이미 증가된 포인트 입니다.", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(CafeQRScanActivity.this, HomeActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }*/
 
                                 mDatabaseRef.child("userAccount").child(user.getUid()).child("point").setValue(userPoint+1);
                                 //log에 데이터 저장..
