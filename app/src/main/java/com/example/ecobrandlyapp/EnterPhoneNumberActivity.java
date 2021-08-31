@@ -85,8 +85,10 @@ public class EnterPhoneNumberActivity extends AppCompatActivity {
                     current=editText.getText().toString();
                     Button btn = (Button) v;
                     /*전화번호 하이픈(-)추가 -> 전화번호 형식에 맞지않게 입력이 되면 강제 종료가 되는 오류가 있음..*/
-                    if(current.length()>2) editText.addTextChangedListener(new PhoneNumberFormattingTextWatcher()); //전화번호 "-" 추가
-                    editText.append(btn.getText().toString());
+                    if(current.length()>2)
+                        editText.addTextChangedListener(new PhoneNumberFormattingTextWatcher()); //전화번호 "-" 추가
+                    if(current.length() < 13) //수정h
+                        editText.append(btn.getText().toString());
                     //editText.setText(textview.getText()+current);
                 }
             });
@@ -95,9 +97,10 @@ public class EnterPhoneNumberActivity extends AppCompatActivity {
         btn[10].setOnClickListener(new Button.OnClickListener(){ // 입력값 지우기
             public void onClick(View v){
                 current=editText.getText().toString();
-                if(current.length()>0){
+                if(current.length()>3){//수정h : if(current.length()>0)
                     current=current.substring(0,current.length()-1);
-                    if(current.length()>2) editText.addTextChangedListener(new PhoneNumberFormattingTextWatcher()); //전화번호 "-" 추가
+                    //if(current.length()>2) //수정h
+                    editText.addTextChangedListener(new PhoneNumberFormattingTextWatcher()); //전화번호 "-" 추가
                     editText.setText(current);
                 }
             }
