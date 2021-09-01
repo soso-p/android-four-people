@@ -23,6 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -34,13 +36,14 @@ public class CafeQRScanActivity extends AppCompatActivity{
     private TextView storeId, timestamp, phoneNumber;
     private String storeUid,storeName,userName,userUid;
     private int userPoint;
-    private String logTime = "00";
+    private String logTime = "0000-00-00 00:00:00";
     private Button btn_back;
     private IntentIntegrator qrScan;
     private int flag=0; //기업정보 있는지
     long now;
     Date date;
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    //24시간으로 표현하기 위해서 수정
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,19 +141,24 @@ public class CafeQRScanActivity extends AppCompatActivity{
 
             eDatabaseRef= FirebaseDatabase.getInstance().getReference("fourpeople");
 
-            //최근 고객의 상점 로그기록 끌어오기
-
-            mDatabaseRef.child("userLog").orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
+            //최근 고객의 상점 로그기록 끌어오기 ,, .orderBykey --> 어떤게 더 최신일까..
+            mDatabaseRef.child("userLog").orderByKey().addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                        /*시간순 역순 정렬방법이 있나..?*/
                         if(userUid.equals(snapshot.child("userUid").getValue(String.class))&& storeUid.equals(snapshot.child("storeUid").getValue(String.class))){
                             logTime = snapshot.child("timeStamp").getValue(String.class);
                             //logTime = Time;
+
                             //Toast.makeText(CafeQRScanActivity.this,snapshot.child("timeStamp").getValue(String.class)+logTime,Toast.LENGTH_SHORT).show();
-                            break;
+
+                            //break;
                         }
+
                     }
+                    //Toast.makeText(CafeQRScanActivity.this,logTime,Toast.LENGTH_SHORT).show();
+
 
                 }
 
@@ -161,10 +169,7 @@ public class CafeQRScanActivity extends AppCompatActivity{
             });
 
 
-
-
-
-                //기업이 존재하는지 check
+            //기업이 존재하는지 check
             eDatabaseRef.child("userAccount").child(resultDataArray[0]).child("idToken").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -175,27 +180,40 @@ public class CafeQRScanActivity extends AppCompatActivity{
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
                             if(task.isSuccessful() && flag==0){
-                                /*long logtime = Long.parseLong(logTime.replaceAll("\\p{Z}",""));
-                                if(logtime+1000*60*10 > Long.parseLong(time)) {
-                                    Toast.makeText(CafeQRScanActivity.this, "이미 증가된 포인트 입니다.", Toast.LENGTH_SHORT).show();
+                               Date llogdate = new Date();
+                               Date ltime =new Date();
+                                try {
+                                    llogdate = format.parse(logTime);
+                                    ltime = format.parse(time);
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+
+                                if( llogdate.getTime() + (long)1000*60*10 > ltime.getTime()  ) {
+                                    Toast.makeText(CafeQRScanActivity.this, llogdate.getTime() + (long)1000*60*10+""+ltime, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(CafeQRScanActivity.this, llogdate+""+ltime, Toast.LENGTH_SHORT).show();
+
+                                    //Toast.makeText(CafeQRScanActivity.this, "if 문 안 -- 이미 증가된 포인트 입니다.", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(CafeQRScanActivity.this, HomeActivity.class);
                                     startActivity(intent);
                                     finish();
-                                }*/
-
-                                mDatabaseRef.child("userAccount").child(user.getUid()).child("point").setValue(userPoint+1);
-                                //log에 데이터 저장..
-                                userLog log = new userLog();
-                                log.setStoreUid(storeUid);
-                                log.setStoreName(storeName);
-                                log.setUserUid(userUid);
-                                log.setUserName(userName);
-                                log.setIncreasePoint(1);
-                                log.setPoints(userPoint+1);
-                                log.setTimeStamp(time);
-                                mDatabaseRef.child("userLog").push().setValue(log);
+                                }
+                                else{
+                                    Toast.makeText(CafeQRScanActivity.this, "else 문 안 " + logTime+time, Toast.LENGTH_SHORT).show();
+                                    mDatabaseRef.child("userAccount").child(user.getUid()).child("point").setValue(userPoint+1);
+                                    //log에 데이터 저장..
+                                    userLog log = new userLog();
+                                    log.setStoreUid(storeUid);
+                                    log.setStoreName(storeName);
+                                    log.setUserUid(userUid);
+                                    log.setUserName(userName);
+                                    log.setIncreasePoint(1);
+                                    log.setPoints(userPoint+1);
+                                    log.setTimeStamp(time);
+                                    mDatabaseRef.child("userLog").push().setValue(log);
+                                }
                             }
-                            else if(!task.isSuccessful() || flag==1 ){
+                            else if (!task.isSuccessful() || flag==1 ){
                                 Toast.makeText(CafeQRScanActivity.this,"가입된 기업이 아닙니다.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(CafeQRScanActivity.this, HomeActivity.class);
                                 startActivity(intent);
