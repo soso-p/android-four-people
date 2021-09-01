@@ -184,7 +184,7 @@ public class EnterPhoneNumberActivity extends AppCompatActivity {
                                             //Toast.makeText(CafeQRScanActivity.this, llogdate.getTime() + (long)1000*60*10+""+ltime, Toast.LENGTH_SHORT).show();
                                             //Toast.makeText(CafeQRScanActivity.this, llogdate+""+ltime, Toast.LENGTH_SHORT).show();
                                             Toast.makeText(EnterPhoneNumberActivity.this, "이미 증가된 포인트 입니다.", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(EnterPhoneNumberActivity.this, HomeActivity.class);
+                                            Intent intent = new Intent(EnterPhoneNumberActivity.this, HomeEnterpriseActivity.class);
                                             startActivity(intent);
                                             finish();
                                         }
