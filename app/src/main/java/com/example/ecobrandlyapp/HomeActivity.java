@@ -186,6 +186,8 @@ public class HomeActivity extends AppCompatActivity {
         textView4.setTextSize(14);
         tableRow.addView(textView4);
 
+        tableRow.setBackgroundColor(Color.WHITE);
+
         tableLayout.addView(tableRow);
     }
 

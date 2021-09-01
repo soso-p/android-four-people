@@ -4,27 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistrationOptionActivity">
+    tools:context=".RegistrationOptionActivity"
+    android:background="@drawable/eco_back">
 
     <Button
         android:id="@+id/btn_client"
+        style="@style/green_button"
         android:layout_width="172dp"
         android:layout_height="81dp"
-        android:layout_marginTop="143dp"
         android:text="일반회원"
-        app:layout_constraintBottom_toTopOf="@+id/btn_enterprise"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.75" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
 
     <Button
         android:id="@+id/btn_enterprise"
+        style="@style/green_button"
         android:layout_width="172dp"
         android:layout_height="81dp"
-        android:layout_marginTop="64dp"
         android:text="기업"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_client" />
+        app:layout_constraintTop_toTopOf="@+id/guideline5"
+        app:layout_constraintVertical_bias="0.25" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
