@@ -201,6 +201,11 @@ public class EnterPhoneNumberActivity extends AppCompatActivity {
                                             log.setPoints(userPoint+1);
                                             log.setTimeStamp(time);
                                             mDatabaseRef.child("userLog").push().setValue(log);
+
+                                            Toast.makeText(EnterPhoneNumberActivity.this,"적립완료", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(EnterPhoneNumberActivity.this, HomeEnterpriseActivity.class);
+                                            startActivity(intent);
+                                            finish();
                                         }
                                     }
                                     else{
@@ -209,10 +214,7 @@ public class EnterPhoneNumberActivity extends AppCompatActivity {
                                 }
                             });
 
-                            Toast.makeText(EnterPhoneNumberActivity.this,"적립완료", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(EnterPhoneNumberActivity.this, HomeEnterpriseActivity.class);
-                            startActivity(intent);
-                            finish();
+
                         }
                         else {
                             Toast.makeText(EnterPhoneNumberActivity.this,"등록된 회원정보가 없습니다.", Toast.LENGTH_SHORT).show();
