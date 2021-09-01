@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EnterPhoneNumberActivity">
+    tools:context=".EnterPhoneNumberActivity"
+    android:background="@drawable/eco_back">
 
     <TableLayout
         android:id="@+id/ePhoneLayout"
@@ -28,7 +29,6 @@
             android:gravity="right|center_vertical"
             android:inputType="phone"
             android:text="010"
-            android:textColor="#000000"
             android:textSize="35sp" />
 
         <TableRow
@@ -41,30 +41,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:backgroundTint="#5B7C34"
                 android:gravity="center"
                 android:text="7"
-                android:textSize="30sp" />
+                android:textSize="30sp"
+                style = "@style/green_button"/>
 
             <Button
                 android:id="@+id/number8"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:backgroundTint="#5B7C34"
                 android:gravity="center"
                 android:text="8"
-                android:textSize="30sp" />
+                android:textSize="30sp"
+                style = "@style/green_button"/>
 
             <Button
                 android:id="@+id/number9"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:backgroundTint="#5B7C34"
                 android:gravity="center"
                 android:text="9"
-                android:textSize="30sp" />
+                android:textSize="30sp"
+                style = "@style/green_button"/>
 
         </TableRow>
 
@@ -78,30 +78,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:backgroundTint="#5B7C34"
                 android:gravity="center"
                 android:text="4"
-                android:textSize="32sp" />
+                android:textSize="30sp"
+                style = "@style/green_button"/>
 
             <Button
                 android:id="@+id/number5"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:backgroundTint="#5B7C34"
                 android:gravity="center"
                 android:text="5"
-                android:textSize="32sp" />
+                android:textSize="30sp"
+                style = "@style/green_button"/>
 
             <Button
                 android:id="@+id/number6"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:backgroundTint="#5B7C34"
                 android:gravity="center"
                 android:text="6"
-                android:textSize="32sp" />
+                android:textSize="30sp"
+                style = "@style/green_button"/>
 
 
         </TableRow>
@@ -116,30 +116,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:backgroundTint="#5B7C34"
                 android:gravity="center"
                 android:text="1"
-                android:textSize="32sp" />
+                android:textSize="30sp"
+                style = "@style/green_button"/>
 
             <Button
                 android:id="@+id/number2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:backgroundTint="#5B7C34"
                 android:gravity="center"
                 android:text="2"
-                android:textSize="32sp" />
+                android:textSize="30sp"
+                style = "@style/green_button"/>
 
             <Button
                 android:id="@+id/number3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:backgroundTint="#5B7C34"
                 android:gravity="center"
                 android:text="3"
-                android:textSize="32sp" />
+                android:textSize="30sp"
+                style = "@style/green_button"/>
 
         </TableRow>
 
@@ -156,7 +156,8 @@
                 android:backgroundTint="#082C09"
                 android:gravity="center"
                 android:text="삭제"
-                android:textSize="32sp" />
+                android:textSize="30sp"
+                style = "@style/green_button"/>
 
             <Button
                 android:id="@+id/number0"
@@ -166,7 +167,8 @@
                 android:backgroundTint="#5B7C34"
                 android:gravity="center"
                 android:text="0"
-                android:textSize="32sp" />
+                android:textSize="30sp"
+                style = "@style/green_button"/>
 
             <Button
                 android:id="@+id/input"
@@ -176,7 +178,8 @@
                 android:backgroundTint="#082C09"
                 android:gravity="center"
                 android:text="입력"
-                android:textSize="32sp" />
+                android:textSize="30sp"
+                style = "@style/green_button"/>
 
         </TableRow>
     </TableLayout>
