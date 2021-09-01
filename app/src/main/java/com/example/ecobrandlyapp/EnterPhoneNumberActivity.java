@@ -147,7 +147,7 @@ public class EnterPhoneNumberActivity extends AppCompatActivity {
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                                     /*시간순 역순 정렬방법이 있나..?*/
-                                    if(userUid.equals(snapshot.child("userUid").getValue(String.class))&& storeUid.equals(snapshot.child("storeUid").getValue(String.class))){
+                                    if(user.getUid().equals(snapshot.child("userUid").getValue(String.class))&& storeUid.equals(snapshot.child("storeUid").getValue(String.class))){
                                         logTime = snapshot.child("timeStamp").getValue(String.class);
                                         //Toast.makeText(CafeQRScanActivity.this,snapshot.child("timeStamp").getValue(String.class)+logTime,Toast.LENGTH_SHORT).show();
                                         //break;

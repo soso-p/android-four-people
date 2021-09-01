@@ -87,11 +87,10 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 tableLayout2.removeAllViews();
                 tableLayout2.addView(titleRow2);
-                //String userUid= user.getIdToken(;
 
                 int row_cnt = 0;
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                    if(userUid.equals(snapshot.child("userUid").getValue((String.class)))){
+                    if(user.getUid().equals(snapshot.child("userUid").getValue((String.class)))){
                         String storeName=snapshot.child("storeName").getValue(String.class);
                         String time=snapshot.child("timeStamp").getValue(String.class);
                         int point=snapshot.child("increasePoint").getValue(Integer.class);
