@@ -149,19 +149,11 @@ public class CafeQRScanActivity extends AppCompatActivity{
                         /*시간순 역순 정렬방법이 있나..?*/
                         if(userUid.equals(snapshot.child("userUid").getValue(String.class))&& storeUid.equals(snapshot.child("storeUid").getValue(String.class))){
                             logTime = snapshot.child("timeStamp").getValue(String.class);
-                            //logTime = Time;
-
                             //Toast.makeText(CafeQRScanActivity.this,snapshot.child("timeStamp").getValue(String.class)+logTime,Toast.LENGTH_SHORT).show();
-
                             //break;
                         }
-
                     }
-                    //Toast.makeText(CafeQRScanActivity.this,logTime,Toast.LENGTH_SHORT).show();
-
-
-                }
-
+                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
@@ -190,16 +182,15 @@ public class CafeQRScanActivity extends AppCompatActivity{
                                 }
 
                                 if( llogdate.getTime() + (long)1000*60*10 > ltime.getTime()  ) {
-                                    Toast.makeText(CafeQRScanActivity.this, llogdate.getTime() + (long)1000*60*10+""+ltime, Toast.LENGTH_SHORT).show();
-                                    Toast.makeText(CafeQRScanActivity.this, llogdate+""+ltime, Toast.LENGTH_SHORT).show();
-
-                                    //Toast.makeText(CafeQRScanActivity.this, "if 문 안 -- 이미 증가된 포인트 입니다.", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(CafeQRScanActivity.this, llogdate.getTime() + (long)1000*60*10+""+ltime, Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(CafeQRScanActivity.this, llogdate+""+ltime, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(CafeQRScanActivity.this, "이미 증가된 포인트 입니다.", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(CafeQRScanActivity.this, HomeActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }
                                 else{
-                                    Toast.makeText(CafeQRScanActivity.this, "else 문 안 " + logTime+time, Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(CafeQRScanActivity.this, "else 문 안 " + logTime+time, Toast.LENGTH_SHORT).show();
                                     mDatabaseRef.child("userAccount").child(user.getUid()).child("point").setValue(userPoint+1);
                                     //log에 데이터 저장..
                                     userLog log = new userLog();
