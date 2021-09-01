@@ -189,6 +189,7 @@ public class AdminActivity extends AppCompatActivity {
         textView3.setGravity(Gravity.CENTER);
         textView3.setTextSize(14);
         tableRow.addView(textView3);
+        tableRow.setBackgroundColor(Color.WHITE);
 
         tableLayout.addView(tableRow);
     }
@@ -226,6 +227,7 @@ public class AdminActivity extends AppCompatActivity {
         CheckBox checkbox = new CheckBox(this);
         checkbox.setGravity(Gravity.CENTER);
         tableRow.addView(checkbox);
+        tableRow.setBackgroundColor(Color.WHITE);
 
         tableLayout.addView(tableRow);
     }
