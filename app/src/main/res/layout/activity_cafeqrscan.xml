@@ -61,7 +61,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
-            android:text="메인 메뉴로 돌아가기" />
+            android:text="메인 메뉴로 돌아가기"
+            style="@style/green_button"/>
 
     </LinearLayout>
 
