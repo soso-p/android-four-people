@@ -142,13 +142,14 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        //내정보 수정
         Button btn_information=findViewById(R.id.btn_information);
         btn_information.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(HomeActivity.this,ModifyInformationActivity.class);
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
 
