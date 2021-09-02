@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_margin="10dp"
+                android:layout_marginRight="0dp"
                 android:text="내 정보" />
 
             <Button

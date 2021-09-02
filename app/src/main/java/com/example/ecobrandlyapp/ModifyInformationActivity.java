@@ -19,7 +19,9 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -160,14 +162,14 @@ public class ModifyInformationActivity extends AppCompatActivity {
                             currentPassword.requestFocus();
                             return;
                         }
-                        //비밀번호 입력 확인
-                        if (Pwd.length()==0){
+                        //변경 비밀번호 입력 확인
+                        if (Pwd.length()==0 && RePwd.length()!=0){
                             Toast.makeText(ModifyInformationActivity.this,"비밀번호을 입력하세요",Toast.LENGTH_SHORT).show();
                             changePassword.requestFocus();
                             return;
                         }
-                        //비밀번호 재입력 확인
-                        if (RePwd.length()==0){
+                        //변경 비밀번호 재입력 확인
+                        if (RePwd.length()==0 && Pwd.length()!=0){
                             Toast.makeText(ModifyInformationActivity.this,"비밀번호 재확인을 입력하세요",Toast.LENGTH_SHORT).show();
                             changeRePassword.requestFocus();
                             return;
@@ -193,7 +195,7 @@ public class ModifyInformationActivity extends AppCompatActivity {
 
                         //데이터베이스 수정
                         Map<String,Object> taskMap = new HashMap<String,Object>();
-                        taskMap.put("pwd",Pwd);
+                        if(Pwd.length()!=0) taskMap.put("pwd",Pwd);
                         taskMap.put("alising",Aliasing);
                         taskMap.put("PhoneNumber",PhoneNumber);
 
@@ -213,6 +215,24 @@ public class ModifyInformationActivity extends AppCompatActivity {
                                         finish();
                                     }
                                 });
+                        /*비밀번호 변경 : 로그인 자격을 다시 재발급 */
+                        if(Pwd.length()!=0){
+                            AuthCredential credential = EmailAuthProvider.getCredential(dataSnapshot.child("id").getValue(String.class), cuPwd);
+                            user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        user.updatePassword(Pwd).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        }
+
 
                     }
                 });
