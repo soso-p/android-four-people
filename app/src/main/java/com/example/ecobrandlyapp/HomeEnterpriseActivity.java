@@ -43,6 +43,7 @@ public class HomeEnterpriseActivity extends AppCompatActivity {
             }
         });
 
+        // 전화번호 입력 버튼
         Button phoneInput =findViewById(R.id.phoneInput);
         phoneInput.setOnClickListener((new View.OnClickListener() {
             @Override
@@ -53,6 +54,16 @@ public class HomeEnterpriseActivity extends AppCompatActivity {
             }
         }));
 
+        //내 정보
+        Button btn_information=findViewById(R.id.btn_information2);
+        btn_information.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(HomeEnterpriseActivity.this,ModifyInformationActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         Calendar cal = Calendar.getInstance();
 
