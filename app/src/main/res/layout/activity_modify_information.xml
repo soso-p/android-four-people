@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ModifyInformationActivity">
+    tools:context=".ModifyInformationActivity"
+    android:background="@drawable/eco_back">
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -37,6 +38,14 @@
             android:inputType="textPersonName"
             android:text="" />
 
+        <EditText
+            android:id="@+id/currentPassword"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:paddingTop="0dp"
+            android:hint="현재 비밀번호"
+            android:inputType="textPassword" />
 
         <EditText
             android:id="@+id/changePassword"
@@ -83,7 +92,8 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:text="수정하기" />
+            android:text="수정하기"
+            style="@style/green_button"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

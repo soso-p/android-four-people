@@ -35,10 +35,10 @@ public class ModifyInformationActivity extends AppCompatActivity {
 
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseRef, Ref; //실시간 데이터 베이스
-    private EditText userId, changeAliasing, changePassword, changeRePassword, changePhoneNumber, changeBusinessReg;
+    private EditText userId, changeAliasing, currentPassword, changePassword, changeRePassword, changePhoneNumber, changeBusinessReg;
     private TextView changePasswordChecker;
     private Button btn_modify;
-    private String Aliasing, Pwd, RePwd, PhoneNumber;
+    private String Aliasing, cuPwd, Pwd, RePwd, PhoneNumber;
     private Object current;
     private int level;
     private String result="";
@@ -98,6 +98,7 @@ public class ModifyInformationActivity extends AppCompatActivity {
                 //layout 초기화
                 userId=findViewById(R.id.userId);
                 changeAliasing=findViewById(R.id.changeAliasing);
+                currentPassword=findViewById(R.id.currentPassword);
                 changePassword=findViewById(R.id.changePassword);
                 changeRePassword=findViewById(R.id.changeRePassword);
                 changePhoneNumber=findViewById(R.id.changePhoneNumber);
@@ -148,10 +149,17 @@ public class ModifyInformationActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Aliasing=changeAliasing.getText().toString();
+                        cuPwd=currentPassword.getText().toString();
                         Pwd = changePassword.getText().toString();
                         RePwd =changeRePassword.getText().toString();
                         PhoneNumber = changePhoneNumber.getText().toString();
 
+                        //현재 비밀번호 확인
+                        if(!cuPwd.equals(dataSnapshot.child("pwd").getValue(String.class))){
+                            Toast.makeText(ModifyInformationActivity.this,"현재 비밀번호를 다시 입력해주세요",Toast.LENGTH_SHORT).show();
+                            currentPassword.requestFocus();
+                            return;
+                        }
                         //비밀번호 입력 확인
                         if (Pwd.length()==0){
                             Toast.makeText(ModifyInformationActivity.this,"비밀번호을 입력하세요",Toast.LENGTH_SHORT).show();
