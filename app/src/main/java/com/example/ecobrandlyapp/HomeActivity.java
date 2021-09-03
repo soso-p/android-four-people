@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -44,6 +45,15 @@ public class HomeActivity extends AppCompatActivity {
         TableLayout tableLayout2 = (TableLayout)findViewById(R.id.tablelayout2);
         TableRow titleRow2 = (TableRow)findViewById(R.id.titleRow2);
         TableRow noDataComment = (TableRow)findViewById(R.id.noDataComment);
+
+        Calendar cal = Calendar.getInstance();
+
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH) + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int min = cal.get(Calendar.MINUTE);
+
 
         /*현재 고객 연동*/
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -87,16 +97,22 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 tableLayout2.removeAllViews();
                 tableLayout2.addView(titleRow2);
-                //String userUid= user.getIdToken(;
 
                 int row_cnt = 0;
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                    if(userUid.equals(snapshot.child("userUid").getValue((String.class)))){
+                    if(user.getUid().equals(snapshot.child("userUid").getValue((String.class)))){
                         String storeName=snapshot.child("storeName").getValue(String.class);
                         String time=snapshot.child("timeStamp").getValue(String.class);
                         int point=snapshot.child("increasePoint").getValue(Integer.class);
                         int points=snapshot.child("points").getValue(Integer.class);
-                        printPresentRow(tableLayout2, time, storeName, point,points);
+
+                        /*포인트 초기화는 관리자의 버튼에 의해서 데이터베이스의 point가 초기화됨,
+                        적립 로그는 데이터베이스 상에서 유지하도록하고 고객 화면에서는 달별 포인트 적립 현황만 보이도록 설정*/
+                        String month_format = Integer.toString(month);
+                        month_format = (month >= 10)? month_format : "0"+month_format;
+                        //Log.i("homeActivity1", "msg : "+time.substring(0,7)+"/"+year+month_format);
+                        if(time.substring(0,7).equals(year+"-"+month_format))
+                          printPresentRow(tableLayout2, time, storeName, point,points);
                         row_cnt += 1;
                     }
                 }
@@ -126,6 +142,17 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        //내정보 수정
+        Button btn_information=findViewById(R.id.btn_information);
+        btn_information.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(HomeActivity.this,ModifyInformationActivity.class);
+                startActivity(intent);
+                //finish();
+            }
+        });
+
         //탈퇴처리하는 구문 (파이어베이스의 회원 정보 삭제)
         //mFirebaseAuth.getCurrentUser().delete();
 
@@ -139,13 +166,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        Calendar cal = Calendar.getInstance();
 
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH) + 1;
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-        int hour = cal.get(Calendar.HOUR_OF_DAY);
-        int min = cal.get(Calendar.MINUTE);
 
         int resultDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH) - day;
 

@@ -9,6 +9,8 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Calendar;
+
 public class HomeEnterpriseActivity extends AppCompatActivity {
 
     private FirebaseAuth mFirebaseAuth;
@@ -41,6 +43,7 @@ public class HomeEnterpriseActivity extends AppCompatActivity {
             }
         });
 
+        // 전화번호 입력 버튼
         Button phoneInput =findViewById(R.id.phoneInput);
         phoneInput.setOnClickListener((new View.OnClickListener() {
             @Override
@@ -50,6 +53,32 @@ public class HomeEnterpriseActivity extends AppCompatActivity {
                 finish();
             }
         }));
+
+        //내 정보
+        Button btn_information=findViewById(R.id.btn_information2);
+        btn_information.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(HomeEnterpriseActivity.this,ModifyInformationActivity.class);
+                startActivity(intent);
+                //finish();
+            }
+        });
+
+        Calendar cal = Calendar.getInstance();
+
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH) + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int min = cal.get(Calendar.MINUTE);
+        int resultDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH) - day;
+
+        /*달의 말일 23:00:00 ~ 23:59:59동안 고객에게 포인트 제공 금지(: point 인정 안됨!)*/
+        if((resultDay == 0 && hour == 23 && min>=0 && min<=59)){
+            btn_qr.setEnabled(false);
+            phoneInput.setEnabled(false);
+        }
 
     }
 }
