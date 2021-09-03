@@ -1,19 +1,29 @@
 package com.example.ecobrandlyapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
 public class HomeEnterpriseActivity extends AppCompatActivity {
-
+    private TextView metId;
     private FirebaseAuth mFirebaseAuth;
+    private DatabaseReference mDatabaseRef; //실시간 데이터 베이스
+    private String userUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +72,28 @@ public class HomeEnterpriseActivity extends AppCompatActivity {
                 Intent intent=new Intent(HomeEnterpriseActivity.this,ModifyInformationActivity.class);
                 startActivity(intent);
                 //finish();
+            }
+        });
+
+        /*현재 고객 연동*/
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mDatabaseRef= FirebaseDatabase.getInstance().getReference("fourpeople");
+        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+
+        metId=findViewById(R.id.id);
+
+        mDatabaseRef.child("userAccount").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userUid=snapshot.child("idToken").getValue(String.class);
+                String userName = snapshot.child("alising").getValue(String.class);
+                metId.setText("\""+userName+"\"님, 반갑습니다!");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
             }
         });
 
