@@ -142,6 +142,17 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        //내정보 수정
+        Button btn_information=findViewById(R.id.btn_information);
+        btn_information.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(HomeActivity.this,ModifyInformationActivity.class);
+                startActivity(intent);
+                //finish();
+            }
+        });
+
         //탈퇴처리하는 구문 (파이어베이스의 회원 정보 삭제)
         //mFirebaseAuth.getCurrentUser().delete();
 
