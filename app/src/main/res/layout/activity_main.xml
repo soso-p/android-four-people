@@ -20,6 +20,7 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:autofillHints="아이디"
+            android:inputType="textEmailAddress"
             android:hint="아이디" />
 
         <EditText
