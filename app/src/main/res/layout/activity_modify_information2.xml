@@ -19,81 +19,87 @@
 
         <EditText
             android:id="@+id/userId"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="50dp"
+            android:layout_gravity="center"
             android:autofillHints="아이디"
+            android:focusableInTouchMode="false"
             android:hint="아이디(이메일)"
-            android:inputType="textEmailAddress"
-            android:focusableInTouchMode="false"/>
+            android:inputType="textEmailAddress" />
 
         <EditText
             android:id="@+id/changeAliasing"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="50dp"
+            android:layout_gravity="center"
             android:layout_marginTop="15dp"
-            android:paddingTop="0dp"
             android:autofillHints="이름(별칭)"
             android:hint="이름(별칭)"
             android:inputType="textPersonName"
+            android:paddingTop="0dp"
             android:text="" />
 
         <EditText
             android:id="@+id/currentPassword"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="50dp"
+            android:layout_gravity="center"
             android:layout_marginTop="15dp"
-            android:paddingTop="0dp"
             android:hint="현재 비밀번호"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:paddingTop="0dp" />
 
         <EditText
             android:id="@+id/changePassword"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="50dp"
+            android:layout_gravity="center"
             android:layout_marginTop="15dp"
-            android:paddingTop="0dp"
             android:hint="변경 비밀번호(6글자이상)"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:paddingTop="0dp" />
 
         <EditText
             android:id="@+id/changeRePassword"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="50dp"
+            android:layout_gravity="center"
             android:layout_marginTop="15dp"
-            android:paddingTop="0dp"
             android:hint="변경 비밀번호 확인"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:paddingTop="0dp" />
 
         <TextView
             android:id="@+id/changePasswordChecker"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="15dp"
+            android:layout_gravity="center"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
             android:paddingBottom="0dp"
-            android:text=""
-            />
+            android:text="" />
 
         <EditText
             android:id="@+id/changePhoneNumber"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="50dp"
+            android:layout_gravity="center"
             android:layout_marginTop="15dp"
-            android:paddingTop="0dp"
             android:hint="연락처"
             android:inputType="phone"
+            android:paddingTop="0dp"
             android:text="" />
 
         <EditText
             android:id="@+id/changeBusinessReg"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="50dp"
+            android:layout_gravity="center"
             android:layout_marginTop="15dp"
-            android:paddingTop="0dp"
-            android:inputType="text"
-            android:hint="사업자등록번호(10자)"
             android:focusableInTouchMode="false"
-            />
+            android:hint="사업자등록번호(10자)"
+            android:inputType="text"
+            android:paddingTop="0dp" />
 
         <Button
             android:id="@+id/btn_modify"
