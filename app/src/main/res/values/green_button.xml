@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="green_button">
-        <item name="android:backgroundTint">#5B7C34</item>
+        <item name="android:backgroundTint">#5DCCC6</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#fff</item>
     </style>
