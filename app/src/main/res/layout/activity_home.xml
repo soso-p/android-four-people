@@ -180,7 +180,7 @@
                         <TextView
                             android:layout_width="122dp"
                             android:layout_height="wrap_content"
-                            android:background="#082C09"
+                            android:background="#0D4B32"
                             android:gravity="center"
                             android:text="적립시간"
                             android:textColor="#FFFFFF"
@@ -189,7 +189,7 @@
                         <TextView
                             android:layout_width="107dp"
                             android:layout_height="wrap_content"
-                            android:background="#082C09"
+                            android:background="#0D4B32"
                             android:gravity="center"
                             android:text="적립가게"
                             android:textColor="#FFFFFF"
@@ -198,7 +198,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="#082C09"
+                            android:background="#0D4B32"
                             android:gravity="center"
                             android:text="적립금"
                             android:textColor="#FFFFFF"
@@ -206,8 +206,8 @@
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="#082C09"
+                            android:layout_height="match_parent"
+                            android:background="#0D4B32"
                             android:gravity="center"
                             android:text="포인트"
                             android:textColor="#FFFFFF"

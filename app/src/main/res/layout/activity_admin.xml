@@ -81,7 +81,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#082C09"
+                        android:background="#0D4B32"
                         android:gravity="center"
                         android:text="ID"
                         android:textColor="#FFFFFF"
@@ -90,7 +90,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#082C09"
+                        android:background="#0D4B32"
                         android:gravity="center"
                         android:text="phone"
                         android:textColor="#FFFFFF"
@@ -99,7 +99,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#082C09"
+                        android:background="#0D4B32"
                         android:gravity="center"
                         android:text="level"
                         android:textColor="#FFFFFF"
@@ -162,7 +162,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#082C09"
+                        android:background="#0D4B32"
                         android:gravity="center"
                         android:text="ID"
                         android:textColor="#FFFFFF"
@@ -171,7 +171,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#082C09"
+                        android:background="#0D4B32"
                         android:gravity="center"
                         android:text="phone"
                         android:textColor="#FFFFFF"
@@ -180,7 +180,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#082C09"
+                        android:background="#0D4B32"
                         android:gravity="center"
                         android:text="혜택"
                         android:textColor="#FFFFFF"
@@ -189,7 +189,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#082C09"
+                        android:background="#0D4B32"
                         android:gravity="center"
                         android:text="전송여부"
                         android:textColor="#FFFFFF"

@@ -150,36 +150,36 @@
 
             <Button
                 android:id="@+id/delete"
+                style="@style/green_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:backgroundTint="#082C09"
+                android:backgroundTint="#0D4B32"
                 android:gravity="center"
                 android:text="삭제"
-                android:textSize="30sp"
-                style = "@style/green_button"/>
+                android:textSize="30sp" />
 
             <Button
                 android:id="@+id/number0"
+                style="@style/green_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:backgroundTint="#5B7C34"
+                android:backgroundTint="#5DCCC6"
                 android:gravity="center"
                 android:text="0"
-                android:textSize="30sp"
-                style = "@style/green_button"/>
+                android:textSize="30sp" />
 
             <Button
                 android:id="@+id/input"
+                style="@style/green_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:backgroundTint="#082C09"
+                android:backgroundTint="#0D4B32"
                 android:gravity="center"
                 android:text="입력"
-                android:textSize="30sp"
-                style = "@style/green_button"/>
+                android:textSize="30sp" />
 
         </TableRow>
     </TableLayout>
