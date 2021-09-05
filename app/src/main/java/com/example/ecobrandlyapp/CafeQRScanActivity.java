@@ -34,7 +34,7 @@ public class CafeQRScanActivity extends AppCompatActivity{
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseRef, eDatabaseRef; //실시간 데이터 베이스
     private TextView storeId, timestamp, phoneNumber;
-    private String storeUid,storeName,userName,userUid;
+    private String storeUid="" ,storeName = "",userName,userUid;
     private int userPoint;
     private String logTime = "0000-00-00 00:00:00";
     private Button btn_back;
@@ -105,14 +105,25 @@ public class CafeQRScanActivity extends AppCompatActivity{
             /*개행문자로 구분*/
 
             String resultDataArray[]=result.getContents().split("\n");
+
+                try {
+                    if(resultDataArray[1].length() != 0 && resultDataArray[0].length() != 0){
+                        storeUid=resultDataArray[0];
+                        storeName=resultDataArray[1];
+                    }
+                }
+
+                catch(IndexOutOfBoundsException e) {
+                    Log.e("checkout Message",resultDataArray[0]);
+
+                }
+
+
             storeId.setText(resultDataArray[0]);
             //시간 저장 위해서 수정
             String time = getTime();
             timestamp.setText(time);
-            phoneNumber.setText(resultDataArray[1]);
-
-            storeUid=resultDataArray[0];
-            storeName=resultDataArray[1];
+            //phoneNumber.setText(resultDataArray[1]);
 
             //현재 고객 = qr 코드 스캔하고 있는
             mFirebaseAuth = FirebaseAuth.getInstance();
