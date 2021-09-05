@@ -88,6 +88,19 @@ public class MainActivity extends AppCompatActivity {
                     String strId = metId.getText().toString().trim();
                     String strPwd = mEtPwd.getText().toString().trim();
 
+                    //아이디 입력 확인
+                    if (strId.length()==0){
+                        Toast.makeText(MainActivity.this,"아이디를 입력하세요",Toast.LENGTH_SHORT).show();
+                        metId.requestFocus();
+                        return;
+                    }
+                    //비밀번호 입력 확인
+                    if (strPwd.length()==0){
+                        Toast.makeText(MainActivity.this,"비밀번호를 입력하세요",Toast.LENGTH_SHORT).show();
+                        mEtPwd.requestFocus();
+                        return;
+                    }
+
                     mFirebaseAuth.signInWithEmailAndPassword(strId,strPwd).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
