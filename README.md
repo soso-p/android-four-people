@@ -10,12 +10,12 @@
 
 ## 📝 개발 환경
 
-개발방식 : JAVA를 사용한 안드로이드 앱 개발
-개발환경 : 운영체제 Windows 10
-통합 개발 환경 : Android Studio
-개발 언어 : JAVA 11
-데이터베이스 : Firebase
-협업도구 : Github (https://github.com/soso-p/android-four-people)
+개발방식 : JAVA를 사용한 안드로이드 앱 개발 <br>
+개발환경 : 운영체제 Windows 10<br>
+통합 개발 환경 : Android Studio<br>
+개발 언어 : JAVA 11<br>
+데이터베이스 : Firebase<br>
+협업도구 : Github (https://github.com/soso-p/android-four-people)<br>
 
 <br>
 
