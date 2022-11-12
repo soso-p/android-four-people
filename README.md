@@ -30,7 +30,7 @@
 <br>
 
 
-## 🌞 기능 내용
+## 🔧 기능 내용
 
  + 회원가입/로그인
   + Firebase Authentication을 사용하여 이메일로 인증
@@ -55,9 +55,17 @@
 
 <br>
 
+## 🎞 프로토 타입 
+
 <img width="750" alt="스크린샷 2022-10-05 오전 12 42 38" src="https://user-images.githubusercontent.com/51548333/193864468-005756a1-3574-4015-8cc4-7064aa47b817.png">
 
-<img width="785" alt="스크린샷 2022-10-05 오전 12 42 56" src="https://user-images.githubusercontent.com/51548333/193864538-eea18aed-d647-47c4-b4e1-8ff8a793e0e0.png">
+<img width="750" alt="스크린샷 2022-10-05 오전 12 42 56" src="https://user-images.githubusercontent.com/51548333/193864538-eea18aed-d647-47c4-b4e1-8ff8a793e0e0.png">
+
+<img width="750" alt="image" src="https://user-images.githubusercontent.com/51548333/201483545-47343cb8-05a1-440d-98ba-ea9ace93124d.png">
+<img width="750" alt="image" src="https://user-images.githubusercontent.com/51548333/201483554-e81ddd4d-dc72-4707-a826-47f23a575f5b.png">
+<img width="750" alt="image" src="https://user-images.githubusercontent.com/51548333/201483558-936c329a-8974-4576-91e5-56241903caaf.png">
+
+
 
 ## 📅 개발기간
 2021.8.19 ~ 2021.08.30 <br><br>
